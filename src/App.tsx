@@ -1,7 +1,7 @@
 import Form, { GroupRenderInstructions, QuestionRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
-import { configs, validators, answers } from './FormBuilder';
-import { Button, Collapse, Checkbox, Radio, Input } from 'antd';
+import { configs, validators, answers } from './FormConfigs';
+import { Button, Collapse, Checkbox, Radio, Input, Space } from 'antd';
 
 import 'antd/dist/antd.css';
 
@@ -42,11 +42,6 @@ export const App: FC = () => {
 
   const validate = () => {
     const output = form.validate();
-    setOutput(output);
-  };
-
-  const isClean = () => {
-    const output = form.isClean();
     setOutput(output);
   };
 
@@ -179,16 +174,15 @@ export const App: FC = () => {
         {renderInstructions.map(group => renderGroup(group))}
       </Collapse>
 
-      <div style={{ marginTop: 32, columnGap: 8 }}>
+      <Space style={{ marginTop: 32 }}>
         <Button type="primary" onClick={getConfigs}>Configs</Button>
         <Button type="primary" onClick={getRenderInstructions}>Render Instructions</Button>
         <Button type="primary" onClick={validate}>Validate</Button>
-        <Button type="primary" onClick={isClean}>Is Clean</Button>
         <Button type="primary" onClick={getErrors}>Errors</Button>
         <Button type="primary" onClick={getCurrentAnswers}>Current Answers</Button>
         <Button type="primary" onClick={getValidatedAnswers}>Validated Answers</Button>
         <Button type="primary" onClick={importAnswers}>Import Answers</Button>
-      </div>
+      </Space>
 
       <pre style={{ marginTop: 32, fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
     </div>

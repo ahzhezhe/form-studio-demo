@@ -3,31 +3,49 @@ import { GroupConfigs, QuestionConfigs } from 'form-studio';
 const questions: QuestionConfigs[] = [];
 
 questions.push({
+  id: 'softwareDeveloper',
   type: 'single',
   ui: {
-    title: 'Has senior taken the COVID-19 vaccination?'
+    title: 'Are you a software developer?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { ui: { title: 'Yes' } },
-    { ui: { title: 'No' }, onSelected: { enable: ['grp3', 'grp4', 'grp5'] } }
+    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['softwareDevelopment'] } },
+    { value: 'false', ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
   ]
 });
 
 questions.push({
+  id: 'jobProfession',
+  defaultDisabled: true,
   type: 'single',
   ui: {
-    title: 'How confident is senior that the Covid-19 vaccines have been thoroughly tested for safety and effectiveness?'
+    title: 'What is your job profession?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { ui: { title: 'Not confident at all' } },
-    { ui: { title: 'Confident' } },
-    { ui: { title: 'Very Confident' } }
+    { value: 'engineer', ui: { title: 'Engineer' } },
+    { value: 'doctor', ui: { title: 'Doctor' } },
+    { value: 'lawyer', ui: { title: 'Lawyer' } },
+    { value: 'other', ui: { title: 'Other' }, onSelected: { enable: ['jobProfessionOther'] } }
   ]
 });
 
+questions.push({
+  id: 'jobProfessionOther',
+  defaultDisabled: true,
+  type: 'any',
+  ui: {
+    inputType: 'string',
+    sub: true,
+    title: 'Please specify',
+    placeholder: 'Job Profession',
+    maxLength: 100
+  },
+  validators: ['notNull']
+});
+
 export const group2: GroupConfigs = {
-  ui: { title: 'COVID-19 Vaccination - General' },
+  ui: { title: 'Job Profession' },
   questions
 };

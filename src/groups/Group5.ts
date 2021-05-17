@@ -3,49 +3,32 @@ import { GroupConfigs, QuestionConfigs } from 'form-studio';
 const questions: QuestionConfigs[] = [];
 
 questions.push({
+  id: 'subscribe',
   type: 'single',
   ui: {
-    title: 'Is senior able to register for Covid-19 vaccination without assistance?'
+    title: 'Would you like to subscribe to our mailing list?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { ui: { title: 'Yes' } },
-    { ui: { title: 'No' }, onSelected: { enable: ['g5q2'] } }
+    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['email'] } },
+    { value: 'false', ui: { title: 'No' } }
   ]
 });
 
 questions.push({
-  id: 'g5q2',
-  defaultDisabled: true,
-  type: 'multiple',
-  ui: {
-    title: 'How did senior learn about Covid-19 vaccination? Select all that apply.'
-  },
-  validators: ['atLeast1'],
-  choices: [
-    { ui: { title: 'Online appointment booking' } },
-    { ui: { title: 'Escort to vaccination location' } },
-    { ui: { title: 'More information about vaccination' } },
-    { ui: { title: 'Others' }, onSelected: { enable: ['g5q2others'] } }
-  ]
-});
-
-questions.push({
-  id: 'g5q2others',
+  id: 'email',
   defaultDisabled: true,
   type: 'any',
   ui: {
     inputType: 'string',
-    sub: true,
-    title: 'Please specify',
+    title: 'Email address',
+    placeholder: 'Email address',
     maxLength: 250
   },
-  validators: ['notNull']
+  validators: ['email']
 });
 
 export const group5: GroupConfigs = {
-  id: 'grp5',
-  defaultDisabled: true,
-  ui: { title: 'COVID-19 Vaccination - Assistance' },
+  ui: { title: 'Subscription' },
   questions
 };

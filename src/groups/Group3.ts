@@ -3,49 +3,92 @@ import { GroupConfigs, QuestionConfigs } from 'form-studio';
 const questions: QuestionConfigs[] = [];
 
 questions.push({
-  type: 'single',
-  ui: {
-    title: 'Has senior heard about the Covid-19 vaccination?'
-  },
-  validators: ['notNullSingle'],
-  choices: [
-    { ui: { title: 'Yes' } },
-    { ui: { title: 'No' } }
-  ]
-});
-
-questions.push({
+  id: 'programmingLanguages',
   type: 'multiple',
   ui: {
-    title: 'How did senior learn about Covid-19 vaccination? Select all that apply.'
+    title: 'What programming languages have you used in the past?'
   },
   validators: ['atLeast1'],
   choices: [
-    { ui: { title: 'Mainstream media (TV/radio news, ads, etc.)' } },
-    { ui: { title: 'Word of mouth' } },
-    { ui: { title: 'Social media platforms' } },
-    { ui: { title: 'Government sources, e.g. invitation letter' } },
-    { ui: { title: 'Out-of-home platforms (e.g. lift display)' } },
-    { ui: { title: 'Others' }, onSelected: { enable: ['g3q2others'] } }
+    { value: 'javascript', ui: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
+    { value: 'java', ui: { title: 'Java' }, onSelected: { enable: ['spring'] } },
+    { value: 'python', ui: { title: 'Python' } },
+    { value: 'c++', ui: { title: 'C++' } },
+    { value: 'c#', ui: { title: 'C#' } },
+    { value: 'vbnet', ui: { title: 'VB.NET' } },
+    { ui: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthers'] } }
   ]
 });
 
 questions.push({
-  id: 'g3q2others',
+  id: 'programmingLanguagesOthers',
   defaultDisabled: true,
   type: 'any',
   ui: {
     inputType: 'string',
     sub: true,
     title: 'Please specify',
-    maxLength: 250
+    placeholder: 'Programming Languages',
+    maxLength: 100
+  },
+  validators: ['notNull']
+});
+
+questions.push({
+  id: 'react',
+  defaultDisabled: true,
+  type: 'single',
+  ui: {
+    title: 'Have you used React in the past?'
+  },
+  validators: ['notNullSingle'],
+  choices: [
+    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
+    { value: 'false', ui: { title: 'No' } }
+  ]
+});
+
+questions.push({
+  id: 'reactExperience',
+  defaultDisabled: true,
+  type: 'any',
+  ui: {
+    inputType: 'string',
+    title: 'What did you build with React?',
+    maxLength: 100
+  },
+  validators: ['notNull']
+});
+
+questions.push({
+  id: 'spring',
+  defaultDisabled: true,
+  type: 'single',
+  ui: {
+    title: 'Have you used Spring in the past?'
+  },
+  validators: ['notNullSingle'],
+  choices: [
+    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
+    { value: 'false', ui: { title: 'No' } }
+  ]
+});
+
+questions.push({
+  id: 'springExperience',
+  defaultDisabled: true,
+  type: 'any',
+  ui: {
+    inputType: 'string',
+    title: 'What did you build with Spring?',
+    maxLength: 100
   },
   validators: ['notNull']
 });
 
 export const group3: GroupConfigs = {
-  id: 'grp3',
+  id: 'softwareDevelopment',
   defaultDisabled: true,
-  ui: { title: 'COVID-19 Vaccination - Awareness' },
+  ui: { title: 'Software Development' },
   questions
 };
