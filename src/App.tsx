@@ -1,7 +1,8 @@
-import Form, { GroupRenderInstructions, QuestionRenderInstructions, RenderInstructions } from 'form-studio';
+import Form, { GroupRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
 import { configs, validators, answers } from './FormConfigs';
-import { Button, Collapse, Checkbox, Radio, Input, Space } from 'antd';
+import { Button, Collapse, Space } from 'antd';
+import { Question } from './components';
 
 import 'antd/dist/antd.css';
 
@@ -22,11 +23,6 @@ export const App: FC = () => {
 
   const getRenderInstructions = () => {
     const output = form.getRenderInstructions();
-    setOutput(output);
-  };
-
-  const getErrors = () => {
-    const output = form.getErrors();
     setOutput(output);
   };
 
@@ -62,107 +58,12 @@ export const App: FC = () => {
         <div style={{ padding: 8 }}>
           <Button onClick={() => form.clearGroup(id, true)}>Clear This Section</Button>
           <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', rowGap: 32 }}>
-            {questions.map(question => renderQuestion(question))}
+            {questions.map(question =>
+              <Question key={question.id} form={form} question={question} />
+            )}
           </div>
         </div>
       </Collapse.Panel>
-    );
-  };
-
-  const renderQuestion = (question: QuestionRenderInstructions) => {
-    const { disabled, type, ui } = question;
-    const { inputType, title, sub } = ui;
-
-    if (disabled) {
-      return null;
-    }
-
-    if (type === 'any') {
-      return (
-        <div style={{ marginTop: sub ? -24 : undefined, paddingLeft: sub ? 24 : undefined }}>
-          <h3>{title}</h3>
-          {inputType === 'string' && renderStringInput(question)}
-        </div>
-      );
-    }
-
-    if (type === 'single') {
-      return (
-        <div>
-          <h3>{title}</h3>
-          {renderRadio(question)}
-        </div>
-      );
-    }
-
-    if (type === 'multiple') {
-      return (
-        <div>
-          <h3>{title}</h3>
-          {renderCheckBoxGroup(question)}
-        </div >
-      );
-    }
-  };
-
-  const renderRadio = (question: QuestionRenderInstructions) => {
-    const { id, choices, error, currentAnswer } = question;
-
-    return (
-      <div>
-        <Radio.Group
-          value={currentAnswer}
-          onChange={e => form.setChoice(id, e.target.value)}>
-          {choices!.map(choice => (
-            <div key={choice.value}>
-              <Radio value={choice.value}
-                disabled={choice.disabled}>
-                {choice.ui.title as string}
-              </Radio>
-            </div>
-          ))}
-        </Radio.Group>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-      </div>
-    );
-  };
-
-  const renderCheckBoxGroup = (question: QuestionRenderInstructions) => {
-    const { id, choices, error, currentAnswer } = question;
-
-    return (
-      <div>
-        <Checkbox.Group
-          value={currentAnswer}
-          onChange={answer => form.setChoices(id, answer as any[])}>
-          {choices!.map(choice => (
-            <div key={choice.value}>
-              <Checkbox
-                value={choice.value}
-                disabled={choice.disabled}>
-                {choice.ui.title as string}
-              </Checkbox>
-            </div>
-          ))}
-        </Checkbox.Group>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-      </div>
-    );
-  };
-
-  const renderStringInput = (question: QuestionRenderInstructions) => {
-    const { id, ui, currentAnswer, error } = question;
-    const { placeholder, maxLength } = ui;
-
-    return (
-      <div>
-        <Input
-          placeholder={placeholder as string}
-          maxLength={maxLength as number}
-          value={currentAnswer}
-          onChange={e => form.setAnswer(id, e.target.value)} />
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-      </div>
     );
   };
 
@@ -171,14 +72,15 @@ export const App: FC = () => {
       <Button onClick={() => form.clear(true)}>Clear Entire Form</Button>
 
       <Collapse style={{ marginTop: 16 }}>
-        {renderInstructions.map(group => renderGroup(group))}
+        {renderInstructions.map(group =>
+          renderGroup(group)
+        )}
       </Collapse>
 
       <Space style={{ marginTop: 32 }}>
         <Button type="primary" onClick={getConfigs}>Configs</Button>
         <Button type="primary" onClick={getRenderInstructions}>Render Instructions</Button>
         <Button type="primary" onClick={validate}>Validate</Button>
-        <Button type="primary" onClick={getErrors}>Errors</Button>
         <Button type="primary" onClick={getCurrentAnswers}>Current Answers</Button>
         <Button type="primary" onClick={getValidatedAnswers}>Validated Answers</Button>
         <Button type="primary" onClick={importAnswers}>Import Answers</Button>
