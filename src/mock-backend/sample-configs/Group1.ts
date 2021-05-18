@@ -6,10 +6,12 @@ questions.push({
   id: 'name',
   type: 'any',
   ui: {
-    inputType: 'name',
-    title: 'What is your name?'
+    inputType: 'string',
+    title: 'What is your name?',
+    placeholder: 'Name',
+    maxLength: 100
   },
-  validators: ['name']
+  validators: ['notNull']
 });
 
 questions.push({

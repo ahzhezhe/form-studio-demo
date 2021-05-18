@@ -8,7 +8,8 @@ questions.push({
   ui: {
     title: 'What colors do you like?'
   },
-  validators: ['atLeast1'],
+  validators: ['notNullMultiple'],
+  validation: { min: 1 },
   choices: [
     { value: 'colorBlind', ui: { title: 'I am color blind' }, onSelected: { disable: ['red', 'yellow', 'blue', 'green', 'purple', 'white', 'black', 'grey', 'others'] } },
     { id: 'red', ui: { title: 'Red' } },

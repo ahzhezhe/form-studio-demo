@@ -9,10 +9,7 @@ sampleConfigs.push(group4);
 sampleConfigs.push(group5);
 
 const sampleAnswers = {
-  'name': {
-    'firstName': 'Tony',
-    'lastName': 'Stark'
-  },
+  'name': 'Tony Stark',
   'gender': 'male',
   'softwareDeveloper': true,
   'programmingLanguages': [

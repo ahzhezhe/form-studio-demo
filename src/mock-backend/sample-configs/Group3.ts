@@ -8,7 +8,8 @@ questions.push({
   ui: {
     title: 'What programming languages have you used in the past?'
   },
-  validators: ['atLeast1'],
+  validators: ['notNullMultiple'],
+  validation: { min: 1 },
   choices: [
     { value: 'javascript', ui: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
     { value: 'java', ui: { title: 'Java' }, onSelected: { enable: ['spring'] } },

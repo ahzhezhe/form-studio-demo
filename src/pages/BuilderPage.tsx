@@ -13,16 +13,6 @@ export const BuilderPage: FC = () => {
     setConfigs(configs);
   }, []);
 
-  const addGroup = () => {
-    configs.push({
-      id: shortUuid.generate(),
-      defaultDisabled: false,
-      ui: { title: 'Untitled' },
-      questions: []
-    });
-    setConfigs(configs);
-  };
-
   const saveConfigs = () => {
     // Validate
     // if (!form.validate()) {
@@ -32,6 +22,15 @@ export const BuilderPage: FC = () => {
 
     mockBackend.saveConfigs(configs);
     alert('Configs have been saved.');
+  };
+
+  const addGroup = () => {
+    setConfigs([...configs, {
+      id: shortUuid.generate(),
+      defaultDisabled: false,
+      ui: { title: '' },
+      questions: []
+    }]);
   };
 
   const updateGroup = (groupId: string, group: GroupConfigs) => {
@@ -45,7 +44,7 @@ export const BuilderPage: FC = () => {
   };
 
   const renderGroup = (group: GroupConfigs) => (
-    <Collapse.Panel key={group.id!} header={group.ui!.title || 'Unnamed Group'}>
+    <Collapse.Panel key={group.id!} header={group.ui!.title || 'Untitled'}>
       <Group group={group} updateGroup={updateGroup} removeGroup={removeGroup} />
     </Collapse.Panel>
   );

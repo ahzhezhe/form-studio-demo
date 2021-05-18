@@ -2,7 +2,6 @@ import Form, { QuestionRenderInstructions } from 'form-studio';
 import React, { FC } from 'react';
 import { Input } from 'antd';
 import { Error } from '.';
-import { NameInput } from './NameInput';
 
 interface Props {
   form: Form;
@@ -21,9 +20,6 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
           maxLength={maxLength as number}
           value={currentAnswer}
           onChange={e => form.setAnswer(id, e.target.value)} />;
-
-      case 'name':
-        return <NameInput name={currentAnswer} onChange={name => form.setAnswer(id, name)} />;
     }
   };
 
