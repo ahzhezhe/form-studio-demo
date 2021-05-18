@@ -45,6 +45,7 @@ export const BuilderPage: FC = () => {
   const [groupIds, setGroupIds] = useState<string[]>([]);
   const [questionIds, setQuestionIds] = useState<string[]>([]);
   const [choiceIds, setChoiceIds] = useState<string[]>([]);
+  const [showConfigs, setShowConfigs] = useState(false);
 
   useEffect(() => {
     const configs = mockBackend.getConfigs();
@@ -195,7 +196,8 @@ export const BuilderPage: FC = () => {
 
         <Divider />
 
-        <pre style={{ fontSize: 12 }}>{JSON.stringify(configs, null, 2)}</pre>
+        <Button type="link" onClick={() => setShowConfigs(!showConfigs)}>{showConfigs ? 'Hide Configs' : 'Show Configs'}</Button>
+        {showConfigs && <pre style={{ fontSize: 12 }}>{JSON.stringify(configs, null, 2)}</pre>}
       </Space>
     </>
   );

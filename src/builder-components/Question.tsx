@@ -41,7 +41,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
   return (
     <Space direction="vertical" style={{ width: '100%', backgroundColor: '#F0F0F0', padding: 16 }}>
       <div>
-        <b>Question ID (Auto-generated if left blank)</b>
+        <b>Question ID (Leave blank for auto-generate)</b>
         <Input value={id} onChange={e => updateQuestion(uuid, { ...question, id: e.target.value })} />
       </div>
 

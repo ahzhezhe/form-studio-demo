@@ -17,12 +17,12 @@ export const Choice: FC<Props> = ({ choice, updateChoice, removeChoice, groupIds
   return (
     <Space direction="vertical" style={{ width: '100%', backgroundColor: '#DDDDDD', padding: 16 }}>
       <div>
-        <b>Choice ID (Auto-generated if left blank)</b>
+        <b>Choice ID (Leave blank for auto-generate)</b>
         <Input value={id} onChange={e => updateChoice(uuid, { ...choice, id: e.target.value })} />
       </div>
 
       <div>
-        <b>Choice Value (Auto-generated if left blank)</b>
+        <b>Choice Value (Leave blank for auto-generate)</b>
         <Input value={value} onChange={e => updateChoice(uuid, { ...choice, value: e.target.value })} />
       </div>
 

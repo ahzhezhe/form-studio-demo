@@ -10,8 +10,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { id: 'subscribeYes', value: true, ui: { title: 'Yes' }, onSelected: { enable: ['email'] } },
-    { id: 'subscribeNo', value: false, ui: { title: 'No' } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['email'] } },
+    { value: false, ui: { title: 'No' } }
   ]
 });
 
@@ -29,7 +29,6 @@ questions.push({
 });
 
 export const group5: GroupConfigs = {
-  id: 'grpSubscription',
   ui: { title: 'Subscription' },
   questions
 };

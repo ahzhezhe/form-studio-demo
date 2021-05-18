@@ -42,7 +42,7 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Group ID (Auto-generated if left blank)</b>
+        <b>Group ID (Leave blank for auto-generate)</b>
         <Input value={id} onChange={e => updateGroup(uuid, { ...group, id: e.target.value })} />
       </div>
 

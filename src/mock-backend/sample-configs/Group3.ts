@@ -11,18 +11,18 @@ questions.push({
   validators: ['notNullMultiple'],
   validation: { min: 1 },
   choices: [
-    { id: 'programmingLanguagesJavascript', value: 'javascript', ui: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
-    { id: 'programmingLanguagesJava', value: 'java', ui: { title: 'Java' }, onSelected: { enable: ['spring'] } },
-    { id: 'programmingLanguagesPython', value: 'python', ui: { title: 'Python' } },
-    { id: 'programmingLanguagesC++', value: 'c++', ui: { title: 'C++' } },
-    { id: 'programmingLanguagesC#', value: 'c#', ui: { title: 'C#' } },
-    { id: 'programmingLanguagesVbnet', value: 'vbnet', ui: { title: 'VB.NET' } },
-    { id: 'programmingLanguagesOthers', value: 'others', ui: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthersDescription'] } }
+    { value: 'javascript', ui: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
+    { value: 'java', ui: { title: 'Java' }, onSelected: { enable: ['spring'] } },
+    { value: 'python', ui: { title: 'Python' } },
+    { value: 'c++', ui: { title: 'C++' } },
+    { value: 'c#', ui: { title: 'C#' } },
+    { value: 'vbnet', ui: { title: 'VB.NET' } },
+    { value: 'others', ui: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthers'] } }
   ]
 });
 
 questions.push({
-  id: 'programmingLanguagesOthersDescription',
+  id: 'programmingLanguagesOthers',
   defaultDisabled: true,
   type: 'any',
   ui: {
@@ -44,8 +44,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { id: 'reactYes', value: true, ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
-    { id: 'reactNo', value: false, ui: { title: 'No' } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
+    { value: false, ui: { title: 'No' } }
   ]
 });
 
@@ -70,8 +70,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { id: 'springYes', value: true, ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
-    { id: 'springNo', value: false, ui: { title: 'No' } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
+    { value: false, ui: { title: 'No' } }
   ]
 });
 

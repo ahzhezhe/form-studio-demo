@@ -22,13 +22,12 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { id: 'genderMale', value: 'male', ui: { title: 'Male' } },
-    { id: 'genderFemale', value: 'female', ui: { title: 'Female' } }
+    { value: 'male', ui: { title: 'Male' } },
+    { value: 'female', ui: { title: 'Female' } }
   ]
 });
 
 export const group1: GroupConfigs = {
-  id: 'grpBasicInformation',
   ui: { title: 'Basic Information' },
   questions
 };
