@@ -11,15 +11,15 @@ sampleConfigs.push(group5);
 const sampleAnswers = {
   'name': 'Tony Stark',
   'gender': 'male',
-  'softwareDeveloper': true,
+  'softwareDeveloper': 'true',
   'programmingLanguages': [
     'javascript',
     'java',
     'python'
   ],
-  'react': true,
+  'react': 'true',
   'reactExperience': 'Amazon',
-  'spring': false,
+  'spring': 'false',
   'colors': [
     'red',
     'blue',
@@ -28,7 +28,7 @@ const sampleAnswers = {
     'others'
   ],
   'colorOthers': 'Pink',
-  'subscribe': true,
+  'subscribe': 'true',
   'email': 'tony@stark.com'
 };
 

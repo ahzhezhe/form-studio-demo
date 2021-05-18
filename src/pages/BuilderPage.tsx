@@ -1,6 +1,6 @@
 import { Button, Collapse, Divider, Space } from 'antd';
 import shortUuid from 'short-uuid';
-import { ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
+import Form, { ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Group } from '../builder-components';
@@ -145,7 +145,17 @@ export const BuilderPage: FC = () => {
   }, [groups]);
 
   const saveConfigs = () => {
-    // TODO: should validate configs first
+    const result = Form.validateConfigs(configs);
+    if (!result.pass) {
+      let errorMsg = '';
+      Object.entries(result.errors!).forEach(([key, errors]) => {
+        errorMsg += `\n${key} - ${errors.join(', ')}`;
+      });
+      alert(`There are some invalid configs, please fix them before saving.${errorMsg}`);
+      return;
+    }
+
+    // TODO: need to do more custom validation, e.g. title cannot be empty, etc.
 
     mockBackend.saveConfigs(configs);
     alert('Configs have been saved.');
