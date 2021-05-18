@@ -10,7 +10,7 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['softwareDevelopment'] } },
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['grpSoftwareDevelopment'] } },
     { value: false, ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
   ]
 });
@@ -46,6 +46,7 @@ questions.push({
 });
 
 export const group2: GroupConfigs = {
+  id: 'grpJobProfession',
   ui: { title: 'Job Profession' },
   questions
 };

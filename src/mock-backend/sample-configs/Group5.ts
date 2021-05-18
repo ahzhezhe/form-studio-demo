@@ -29,6 +29,7 @@ questions.push({
 });
 
 export const group5: GroupConfigs = {
+  id: 'grpSubscription',
   ui: { title: 'Subscription' },
   questions
 };

@@ -26,6 +26,7 @@ questions.push({
 });
 
 export const group1: GroupConfigs = {
+  id: 'grpBasicInformation',
   ui: { title: 'Basic Information' },
   questions
 };

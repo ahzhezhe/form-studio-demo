@@ -87,7 +87,7 @@ questions.push({
 });
 
 export const group3: GroupConfigs = {
-  id: 'softwareDevelopment',
+  id: 'grpSoftwareDevelopment',
   defaultDisabled: true,
   ui: { title: 'Software Development' },
   questions

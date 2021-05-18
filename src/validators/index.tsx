@@ -8,7 +8,7 @@ export const validators: Record<string, Validator> = {
   },
 
   notNullSingle: value => {
-    if (!value) {
+    if (value === undefined) {
       throw new Error('Please select an option.');
     }
   },

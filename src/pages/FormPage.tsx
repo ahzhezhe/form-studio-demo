@@ -1,8 +1,8 @@
 import Form, { GroupRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
 import { mockBackend } from '../mock-backend';
-import { Button, Collapse, Space } from 'antd';
-import { Question } from '../components';
+import { Button, Collapse, Divider, Space } from 'antd';
+import { Question } from '../form-components';
 import { validators } from '../validators';
 
 let form: Form;
@@ -15,6 +15,22 @@ export const FormPage: FC = () => {
     const configs = mockBackend.getConfigs();
     form = new Form(configs, validators, true, form => setRenderInstructions(form.getRenderInstructions()));
   }, []);
+
+  const restoreAnswers = () => {
+    const answers = mockBackend.getAnswers();
+    form.importAnswers(answers);
+  };
+
+  const saveAnswers = () => {
+    if (!form.validate()) {
+      alert('There are some invalid answers, please fix them before saving.');
+      return;
+    }
+
+    const answers = form.getValidatedAnswers();
+    mockBackend.saveAnswers(answers);
+    alert('Your answers have been saved.');
+  };
 
   const getConfigs = () => {
     const output = form.getConfigs();
@@ -41,11 +57,6 @@ export const FormPage: FC = () => {
     setOutput(output);
   };
 
-  const importAnswers = () => {
-    const answers = mockBackend.getAnswers();
-    form.importAnswers(answers);
-  };
-
   const renderGroup = (group: GroupRenderInstructions) => {
     const { id, disabled, ui, questions } = group;
     const { title } = ui;
@@ -57,7 +68,7 @@ export const FormPage: FC = () => {
     return (
       <Collapse.Panel key={id} header={title}>
         <div style={{ padding: 8 }}>
-          <Button onClick={() => form.clearGroup(id, true)}>Clear This Section</Button>
+          <Button danger onClick={() => form.clearGroup(id, true)}>Clear This Section</Button>
           <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', rowGap: 32 }}>
             {questions.map(question =>
               <Question key={question.id} form={form} question={question} />
@@ -69,25 +80,29 @@ export const FormPage: FC = () => {
   };
 
   return (
-    <div style={{ padding: 32 }}>
-      <Button onClick={() => form.clear(true)}>Clear Entire Form</Button>
-
-      <Collapse style={{ marginTop: 16 }}>
-        {renderInstructions.map(group =>
-          renderGroup(group)
-        )}
-      </Collapse>
-
-      <Space style={{ marginTop: 32 }}>
-        <Button type="primary" onClick={getConfigs}>Configs</Button>
-        <Button type="primary" onClick={getRenderInstructions}>Render Instructions</Button>
-        <Button type="primary" onClick={validate}>Validate</Button>
-        <Button type="primary" onClick={getCurrentAnswers}>Current Answers</Button>
-        <Button type="primary" onClick={getValidatedAnswers}>Validated Answers</Button>
-        <Button type="primary" onClick={importAnswers}>Import Answers</Button>
+    <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
+      <Space>
+        <Button danger onClick={() => form.clear(true)}>Clear Entire Form</Button>
+        <Button type="primary" ghost onClick={restoreAnswers}>Restore Saved Answers</Button>
       </Space>
 
-      <pre style={{ marginTop: 32, fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
-    </div>
+      <Collapse style={{ marginTop: 16 }}>
+        {renderInstructions.map(group => renderGroup(group))}
+      </Collapse>
+
+      <Button style={{ marginTop: 16 }} type="primary" onClick={saveAnswers}>Save Answers</Button>
+
+      <Divider />
+
+      <Space>
+        <Button onClick={getConfigs}>Configs</Button>
+        <Button onClick={getRenderInstructions}>Render Instructions</Button>
+        <Button onClick={validate}>Validate</Button>
+        <Button onClick={getCurrentAnswers}>Current Answers</Button>
+        <Button onClick={getValidatedAnswers}>Validated Answers</Button>
+      </Space>
+
+      <pre style={{ fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
+    </Space>
   );
 };

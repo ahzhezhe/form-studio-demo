@@ -38,6 +38,7 @@ questions.push({
 });
 
 export const group4: GroupConfigs = {
+  id: 'grpColor',
   ui: { title: 'Color' },
   questions
 };
