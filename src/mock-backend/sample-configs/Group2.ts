@@ -10,8 +10,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['softwareDevelopment'] } },
-    { value: 'false', ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['softwareDevelopment'] } },
+    { value: false, ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
   ]
 });
 

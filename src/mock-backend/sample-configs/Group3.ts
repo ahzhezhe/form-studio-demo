@@ -43,8 +43,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
-    { value: 'false', ui: { title: 'No' } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
+    { value: false, ui: { title: 'No' } }
   ]
 });
 
@@ -69,8 +69,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
-    { value: 'false', ui: { title: 'No' } }
+    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
+    { value: false, ui: { title: 'No' } }
   ]
 });
 
