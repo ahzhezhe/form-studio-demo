@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space } from 'antd';
+import { Button, Collapse, Input, Select, Space } from 'antd';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
 import { Choice } from '.';
@@ -7,13 +7,12 @@ import { ChoiceBuilder, QuestionBuilder } from '../pages';
 interface Props {
   question: QuestionBuilder;
   updateQuestion: (uuid: string, question: QuestionBuilder) => void;
-  removeQuestion: (uuid: string) => void;
   groupIds: string[];
   questionIds: string[];
   choiceIds: string[];
 }
 
-export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, groupIds, questionIds, choiceIds }) => {
+export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questionIds, choiceIds }) => {
   const { uuid, id, type, inputType, title, placeholder, defaultDisabled, choices, validators, maxLength, min, max } = question;
 
   const addChoice = () => {
@@ -39,9 +38,9 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%', backgroundColor: '#F0F0F0', padding: 16 }}>
+    <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Question ID (Leave blank for auto-generate)</b>
+        <b>Question ID (Optional)</b>
         <Input value={id} onChange={e => updateQuestion(uuid, { ...question, id: e.target.value })} />
       </div>
 
@@ -138,25 +137,33 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
         <>
           <div>
             <b>Choices</b>
-            <Space direction="vertical" style={{ width: '100%' }}>
-              {choices!.map(choice =>
-                <Choice
-                  key={choice.uuid}
-                  choice={choice}
-                  updateChoice={updateChoice}
-                  removeChoice={removeChoice}
-                  groupIds={groupIds}
-                  questionIds={questionIds}
-                  choiceIds={choiceIds}
-                />
+            <Collapse>
+              {choices.map(choice =>
+                <Collapse.Panel key={choice.uuid}
+                  header={
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <div>{choice.title || 'Untitled'}</div>
+                      <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                        removeChoice(choice.uuid);
+                        event.stopPropagation();
+                      }}>Remove</div>
+                    </div>
+                  }>
+                  <Choice
+                    key={choice.uuid}
+                    choice={choice}
+                    updateChoice={updateChoice}
+                    groupIds={groupIds}
+                    questionIds={questionIds}
+                    choiceIds={choiceIds}
+                  />
+                </Collapse.Panel>
               )}
-            </Space>
+            </Collapse>
           </div>
           <Button type="primary" onClick={addChoice}>+ Add Choice</Button>
         </>
       }
-
-      <Button danger onClick={() => removeQuestion(uuid)}>Remove Question</Button>
     </Space>
   );
 };

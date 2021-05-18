@@ -177,11 +177,19 @@ export const BuilderPage: FC = () => {
       <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
         <Collapse>
           {groups.map(group =>
-            <Collapse.Panel key={group.uuid} header={group.title || 'Untitled'}>
+            <Collapse.Panel key={group.uuid}
+              header={
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div>{group.title || 'Untitled'}</div>
+                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                    removeGroup(group.uuid);
+                    event.stopPropagation();
+                  }}>Remove</div>
+                </div>
+              }>
               <Group
                 group={group}
                 updateGroup={updateGroup}
-                removeGroup={removeGroup}
                 groupIds={groupIds}
                 questionIds={questionIds}
                 choiceIds={choiceIds}

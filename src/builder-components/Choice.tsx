@@ -1,28 +1,27 @@
-import { Button, Input, Select, Space } from 'antd';
+import { Input, Select, Space } from 'antd';
 import React, { FC } from 'react';
 import { ChoiceBuilder } from '../pages';
 
 interface Props {
   choice: ChoiceBuilder;
   updateChoice: (choiceId: string, choice: ChoiceBuilder) => void;
-  removeChoice: (choiceId: string) => void;
   groupIds: string[];
   questionIds: string[];
   choiceIds: string[];
 }
 
-export const Choice: FC<Props> = ({ choice, updateChoice, removeChoice, groupIds, questionIds, choiceIds }) => {
+export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds, choiceIds }) => {
   const { uuid, id, value, title, defaultDisabled, onSelected } = choice;
 
   return (
-    <Space direction="vertical" style={{ width: '100%', backgroundColor: '#DDDDDD', padding: 16 }}>
+    <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Choice ID (Leave blank for auto-generate)</b>
+        <b>Choice ID (Optional)</b>
         <Input value={id} onChange={e => updateChoice(uuid, { ...choice, id: e.target.value })} />
       </div>
 
       <div>
-        <b>Choice Value (Leave blank for auto-generate)</b>
+        <b>Choice Value (Optional)</b>
         <Input value={value} onChange={e => updateChoice(uuid, { ...choice, value: e.target.value })} />
       </div>
 
@@ -68,8 +67,6 @@ export const Choice: FC<Props> = ({ choice, updateChoice, removeChoice, groupIds
           )}
         </Select>
       </div>
-
-      <Button danger onClick={() => removeChoice(uuid)}>Remove Choice</Button>
     </Space>
   );
 };

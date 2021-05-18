@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space } from 'antd';
+import { Button, Collapse, Input, Select, Space } from 'antd';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
 import { Question } from '.';
@@ -7,13 +7,12 @@ import { GroupBuilder, QuestionBuilder } from '../pages';
 interface Props {
   group: GroupBuilder;
   updateGroup: (uuid: string, group: GroupBuilder) => void;
-  removeGroup: (uuid: string) => void;
   groupIds: string[];
   questionIds: string[];
   choiceIds: string[];
 }
 
-export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, questionIds, choiceIds }) => {
+export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, choiceIds }) => {
   const { uuid, id, defaultDisabled, title, questions } = group;
 
   const updateQuestion = (uuid: string, question: QuestionBuilder) => {
@@ -42,7 +41,7 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Group ID (Leave blank for auto-generate)</b>
+        <b>Group ID (Optional)</b>
         <Input value={id} onChange={e => updateGroup(uuid, { ...group, id: e.target.value })} />
       </div>
 
@@ -61,24 +60,32 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
 
       <div>
         <b>Questions</b>
-        <Space direction="vertical" style={{ width: '100%' }}>
-          {questions!.map(question =>
-            <Question
-              key={question.uuid}
-              question={question}
-              updateQuestion={updateQuestion}
-              removeQuestion={removeQuestion}
-              groupIds={groupIds}
-              questionIds={questionIds}
-              choiceIds={choiceIds}
-            />
+        <Collapse>
+          {questions.map(question =>
+            <Collapse.Panel key={question.uuid}
+              header={
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div>{question.title || 'Untitled'}</div>
+                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                    removeQuestion(question.uuid);
+                    event.stopPropagation();
+                  }}>Remove</div>
+                </div>
+              }>
+              <Question
+                key={question.uuid}
+                question={question}
+                updateQuestion={updateQuestion}
+                groupIds={groupIds}
+                questionIds={questionIds}
+                choiceIds={choiceIds}
+              />
+            </Collapse.Panel>
           )}
-        </Space>
+        </Collapse>
       </div>
 
       <Button type="primary" onClick={addQuestion}>+ Add Question</Button>
-
-      <Button danger onClick={() => removeGroup(uuid)}>Remove Group</Button>
     </Space>
   );
 };
