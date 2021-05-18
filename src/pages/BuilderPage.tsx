@@ -145,7 +145,7 @@ export const BuilderPage: FC = () => {
   }, [groups]);
 
   const saveConfigs = () => {
-    // TODO: validate configs first
+    // TODO: should validate configs first
 
     mockBackend.saveConfigs(configs);
     alert('Configs have been saved.');
