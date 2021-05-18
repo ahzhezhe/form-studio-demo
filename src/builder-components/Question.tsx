@@ -1,15 +1,19 @@
 import { Button, Input, Select, Space } from 'antd';
-import { QuestionConfigs } from 'form-studio';
+import { ChoiceConfigs, QuestionConfigs } from 'form-studio';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
+import { Choice } from '.';
 
 interface Props {
   question: QuestionConfigs;
   updateQuestion: (questionId: string, question: QuestionConfigs) => void;
   removeQuestion: (questionId: string) => void;
+  groupIds: string[];
+  questionIds: string[];
+  choiceIds: string[];
 }
 
-export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion }) => {
+export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, groupIds, questionIds, choiceIds }) => {
   const { id, type, ui, defaultDisabled, choices, validators, validation } = question;
 
   const addChoice = () => {
@@ -18,13 +22,24 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion }
         id: shortUuid.generate(),
         defaultDisabled: false,
         value: '',
-        ui: { title: '' }
+        ui: { title: '' },
+        onSelected: { }
       }]
     });
   };
 
+  const updateChoice = (choiceId: string, choice: ChoiceConfigs) => {
+    const newChoices = choices!.map(c => c.id !== choiceId ? c : choice);
+    updateQuestion(id!, { ...question, choices: newChoices });
+  };
+
+  const removeChoice = (choiceId: string) => {
+    const newChoices = choices!.filter(c => c.id !== choiceId);
+    updateQuestion(id!, { ...question, choices: newChoices });
+  };
+
   return (
-    <Space direction="vertical" style={{ width: '100%', backgroundColor: '#F3F3F3', padding: 16 }}>
+    <Space direction="vertical" style={{ width: '100%', backgroundColor: '#F0F0F0', padding: 16 }}>
       <div>
         <b>Question ID</b>
         <Input value={id} onChange={e => updateQuestion(id!, { ...question, id: e.target.value })} />
@@ -114,7 +129,25 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion }
       }
 
       {type !== 'any' &&
-        <Button type="primary" ghost onClick={addChoice}>+ Add Choice</Button>
+        <>
+          <div>
+            <b>Choices</b>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              {choices!.map(choice =>
+                <Choice
+                  key={choice.id}
+                  choice={choice}
+                  updateChoice={updateChoice}
+                  removeChoice={removeChoice}
+                  groupIds={groupIds}
+                  questionIds={questionIds}
+                  choiceIds={choiceIds}
+                />
+              )}
+            </Space>
+          </div>
+          <Button type="primary" ghost onClick={addChoice}>+ Add Choice</Button>
+        </>
       }
 
       <Button danger onClick={() => removeQuestion(id!)}>Remove Question</Button>

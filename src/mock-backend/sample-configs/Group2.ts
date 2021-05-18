@@ -10,8 +10,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['grpSoftwareDevelopment'] } },
-    { value: false, ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
+    { id: 'softwareDeveloperYes', value: true, ui: { title: 'Yes' }, onSelected: { enable: ['grpSoftwareDevelopment'] } },
+    { id: 'softwareDeveloperNo', value: false, ui: { title: 'No' }, onSelected: { enable: ['jobProfession'] } }
   ]
 });
 
@@ -24,15 +24,15 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'engineer', ui: { title: 'Engineer' } },
-    { value: 'doctor', ui: { title: 'Doctor' } },
-    { value: 'lawyer', ui: { title: 'Lawyer' } },
-    { value: 'other', ui: { title: 'Other' }, onSelected: { enable: ['jobProfessionOther'] } }
+    { id: 'jobProfessionEngineer', value: 'engineer', ui: { title: 'Engineer' } },
+    { id: 'jobProfessionDoctor', value: 'doctor', ui: { title: 'Doctor' } },
+    { id: 'jobProfessionLawyer', value: 'lawyer', ui: { title: 'Lawyer' } },
+    { id: 'jobProfessionOther', value: 'other', ui: { title: 'Other' }, onSelected: { enable: ['jobProfessionOtherDescription'] } }
   ]
 });
 
 questions.push({
-  id: 'jobProfessionOther',
+  id: 'jobProfessionOtherDescription',
   defaultDisabled: true,
   type: 'any',
   ui: {

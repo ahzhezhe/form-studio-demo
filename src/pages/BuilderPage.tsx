@@ -1,17 +1,50 @@
+import { Button, Collapse, Divider, Space } from 'antd';
+import shortUuid from 'short-uuid';
 import { Configs, GroupConfigs } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
-import { mockBackend } from '../mock-backend';
-import { Button, Collapse, Divider, Space } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { Group } from '../builder-components';
-import shortUuid from 'short-uuid';
+import { mockBackend } from '../mock-backend';
 
 export const BuilderPage: FC = () => {
+  const history = useHistory();
   const [configs, setConfigs] = useState<Configs>([]);
+  const [groupIds, setGroupIds] = useState<string[]>([]);
+  const [questionIds, setQuestionIds] = useState<string[]>([]);
+  const [choiceIds, setChoiceIds] = useState<string[]>([]);
 
   useEffect(() => {
     const configs = mockBackend.getConfigs();
     setConfigs(configs);
   }, []);
+
+  useEffect(() => {
+    const groupIds: string[] = [];
+    const questionIds: string[] = [];
+    const choiceIds: string[] = [];
+
+    configs.forEach(group => {
+      if (group.id) {
+        groupIds.push(group.id);
+      }
+
+      group.questions?.forEach(question => {
+        if (question.id) {
+          questionIds.push(question.id);
+        }
+
+        question.choices?.forEach(choice => {
+          if (choice.id) {
+            choiceIds.push(choice.id);
+          }
+        });
+      });
+    });
+
+    setGroupIds(groupIds);
+    setQuestionIds(questionIds);
+    setChoiceIds(choiceIds);
+  }, [configs]);
 
   const saveConfigs = () => {
     // Validate
@@ -43,25 +76,34 @@ export const BuilderPage: FC = () => {
     setConfigs(newConfigs);
   };
 
-  const renderGroup = (group: GroupConfigs) => (
-    <Collapse.Panel key={group.id!} header={group.ui!.title || 'Untitled'}>
-      <Group group={group} updateGroup={updateGroup} removeGroup={removeGroup} />
-    </Collapse.Panel>
-  );
-
   return (
-    <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
-      <Collapse>
-        {configs.map(group => renderGroup(group))}
-      </Collapse>
+    <>
+      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => history.push('/')}>&lt; Back</Button>
 
-      <Button type="primary" ghost onClick={addGroup}>+ Add Group</Button>
+      <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
+        <Collapse>
+          {configs.map(group =>
+            <Collapse.Panel key={group.id!} header={group.ui!.title || 'Untitled'}>
+              <Group
+                group={group}
+                updateGroup={updateGroup}
+                removeGroup={removeGroup}
+                groupIds={groupIds}
+                questionIds={questionIds}
+                choiceIds={choiceIds}
+              />
+            </Collapse.Panel>
+          )}
+        </Collapse>
 
-      <Button type="primary" onClick={saveConfigs}>Save</Button>
+        <Button type="primary" ghost onClick={addGroup}>+ Add Group</Button>
 
-      <Divider />
+        <Button type="primary" onClick={saveConfigs}>Save</Button>
 
-      <pre style={{ fontSize: 12 }}>{JSON.stringify(configs, null, 2)}</pre>
-    </Space>
+        <Divider />
+
+        <pre style={{ fontSize: 12 }}>{JSON.stringify(configs, null, 2)}</pre>
+      </Space>
+    </>
   );
 };

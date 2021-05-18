@@ -8,9 +8,12 @@ interface Props {
   group: GroupConfigs;
   updateGroup: (groupId: string, group: GroupConfigs) => void;
   removeGroup: (groupId: string) => void;
+  groupIds: string[];
+  questionIds: string[];
+  choiceIds: string[];
 }
 
-export const Group: FC<Props> = ({ group, updateGroup, removeGroup }) => {
+export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, questionIds, choiceIds }) => {
   const { id, defaultDisabled, ui, questions } = group;
   const { title } = ui!;
 
@@ -60,11 +63,19 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup }) => {
 
       <div>
         <b>Questions</b>
-        <div style={{ display: 'flex', flexDirection: 'column', rowGap: 16 }}>
+        <Space direction="vertical" style={{ width: '100%' }}>
           {questions!.map(question =>
-            <Question key={question.id} question={question} updateQuestion={updateQuestion} removeQuestion={removeQuestion} />
+            <Question
+              key={question.id}
+              question={question}
+              updateQuestion={updateQuestion}
+              removeQuestion={removeQuestion}
+              groupIds={groupIds}
+              questionIds={questionIds}
+              choiceIds={choiceIds}
+            />
           )}
-        </div>
+        </Space>
       </div>
 
       <Button type="primary" ghost onClick={addQuestion}>+ Add Question</Button>

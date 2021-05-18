@@ -12,7 +12,7 @@ const sampleAnswers = {
   'name': 'Tony Stark',
   'gender': 'male',
   'softwareDeveloper': true,
-  'programmingLanguages': [
+  'programmingLanguagesDescription': [
     'javascript',
     'java',
     'python'
@@ -27,7 +27,7 @@ const sampleAnswers = {
     'black',
     'others'
   ],
-  'colorOthers': 'Pink',
+  'colorOthersDescription': 'Pink',
   'subscribe': true,
   'email': 'tony@stark.com'
 };

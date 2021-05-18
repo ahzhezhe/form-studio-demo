@@ -1,13 +1,15 @@
+import { Button, Collapse, Divider, Space } from 'antd';
 import Form, { GroupRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
-import { mockBackend } from '../mock-backend';
-import { Button, Collapse, Divider, Space } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { Question } from '../form-components';
+import { mockBackend } from '../mock-backend';
 import { validators } from '../validators';
 
 let form: Form;
 
 export const FormPage: FC = () => {
+  const history = useHistory();
   const [renderInstructions, setRenderInstructions] = useState<RenderInstructions>([]);
   const [output, setOutput] = useState<any>();
 
@@ -80,29 +82,34 @@ export const FormPage: FC = () => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
-      <Space>
-        <Button danger onClick={() => form.clear(true)}>Clear Entire Form</Button>
-        <Button type="primary" ghost onClick={restoreAnswers}>Restore Saved Answers</Button>
+    <>
+      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => history.push('/')}>&lt; Back</Button>
+
+      <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
+
+        <Space>
+          <Button danger onClick={() => form.clear(true)}>Clear Entire Form</Button>
+          <Button type="primary" ghost onClick={restoreAnswers}>Restore Saved Answers</Button>
+        </Space>
+
+        <Collapse style={{ marginTop: 16 }}>
+          {renderInstructions.map(group => renderGroup(group))}
+        </Collapse>
+
+        <Button style={{ marginTop: 16 }} type="primary" onClick={saveAnswers}>Save Answers</Button>
+
+        <Divider />
+
+        <Space>
+          <Button onClick={getConfigs}>Configs</Button>
+          <Button onClick={getRenderInstructions}>Render Instructions</Button>
+          <Button onClick={validate}>Validate</Button>
+          <Button onClick={getCurrentAnswers}>Current Answers</Button>
+          <Button onClick={getValidatedAnswers}>Validated Answers</Button>
+        </Space>
+
+        <pre style={{ fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
       </Space>
-
-      <Collapse style={{ marginTop: 16 }}>
-        {renderInstructions.map(group => renderGroup(group))}
-      </Collapse>
-
-      <Button style={{ marginTop: 16 }} type="primary" onClick={saveAnswers}>Save Answers</Button>
-
-      <Divider />
-
-      <Space>
-        <Button onClick={getConfigs}>Configs</Button>
-        <Button onClick={getRenderInstructions}>Render Instructions</Button>
-        <Button onClick={validate}>Validate</Button>
-        <Button onClick={getCurrentAnswers}>Current Answers</Button>
-        <Button onClick={getValidatedAnswers}>Validated Answers</Button>
-      </Space>
-
-      <pre style={{ fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
-    </Space>
+    </>
   );
 };

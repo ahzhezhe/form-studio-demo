@@ -11,21 +11,21 @@ questions.push({
   validators: ['notNullMultiple'],
   validation: { min: 1 },
   choices: [
-    { value: 'colorBlind', ui: { title: 'I am color blind' }, onSelected: { disable: ['red', 'yellow', 'blue', 'green', 'purple', 'white', 'black', 'grey', 'others'] } },
-    { id: 'red', ui: { title: 'Red' } },
-    { id: 'yellow', ui: { title: 'Yellow' } },
-    { id: 'blue', ui: { title: 'Blue' } },
-    { id: 'green', ui: { title: 'Green' } },
-    { id: 'purple', ui: { title: 'Purple' } },
-    { id: 'white', ui: { title: 'White' } },
-    { id: 'black', ui: { title: 'Black' } },
-    { id: 'grey', ui: { title: 'Grey' } },
-    { id: 'others', ui: { title: 'Others' }, onSelected: { enable: ['colorOthers'] } }
+    { id: 'colorsColorBlind', value: 'colorBlind', ui: { title: 'I am color blind' }, onSelected: { disable: ['colorsRed', 'colorsYellow', 'colorsBlue', 'colorsGreen', 'colorsPurple', 'colorsWhite', 'colorsBlack', 'colorsGrey', 'colorsOthers'] } },
+    { id: 'colorsRed', ui: { title: 'Red' } },
+    { id: 'colorsYellow', ui: { title: 'Yellow' } },
+    { id: 'colorsBlue', ui: { title: 'Blue' } },
+    { id: 'colorsGreen', ui: { title: 'Green' } },
+    { id: 'colorsPurple', ui: { title: 'Purple' } },
+    { id: 'colorsWhite', ui: { title: 'White' } },
+    { id: 'colorsBlack', ui: { title: 'Black' } },
+    { id: 'colorsGrey', ui: { title: 'Grey' } },
+    { id: 'colorsOthers', ui: { title: 'Others' }, onSelected: { enable: ['colorOthers'] } }
   ]
 });
 
 questions.push({
-  id: 'colorOthers',
+  id: 'colorOthersDescription',
   defaultDisabled: true,
   type: 'any',
   ui: {

@@ -10,8 +10,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: true, ui: { title: 'Yes' }, onSelected: { enable: ['email'] } },
-    { value: false, ui: { title: 'No' } }
+    { id: 'subscribeYes', value: true, ui: { title: 'Yes' }, onSelected: { enable: ['email'] } },
+    { id: 'subscribeNo', value: false, ui: { title: 'No' } }
   ]
 });
 

@@ -22,8 +22,8 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'male', ui: { title: 'Male' } },
-    { value: 'female', ui: { title: 'Female' } }
+    { id: 'genderMale', value: 'male', ui: { title: 'Male' } },
+    { id: 'genderFemale', value: 'female', ui: { title: 'Female' } }
   ]
 });
 
