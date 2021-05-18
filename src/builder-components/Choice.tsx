@@ -16,22 +16,22 @@ export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds,
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Choice ID (Optional)</b>
+        <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateChoice(uuid, { ...choice, id: e.target.value })} />
       </div>
 
       <div>
-        <b>Choice Value (Optional)</b>
+        <b>Value</b>
         <Input value={value} onChange={e => updateChoice(uuid, { ...choice, value: e.target.value })} />
       </div>
 
       <div>
-        <b>Choice Title</b>
+        <b>Title</b>
         <Input value={title} onChange={e => updateChoice(uuid, { ...choice, title: e.target.value })} />
       </div>
 
       <div>
-        <b>Choice Default Disabled</b>
+        <b>Default Disabled</b>
         <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateChoice(uuid, { ...choice, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
@@ -39,7 +39,7 @@ export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds,
       </div>
 
       <div>
-        <b>Choice On Select Enable</b>
+        <b>Enable When Selected (Optional)</b>
         <Select style={{ width: '100%' }} mode="multiple" value={onSelected?.enable} onChange={value => updateChoice(uuid, { ...choice, onSelected: { ...onSelected, enable: value.length === 0 ? undefined : value } })}>
           {groupIds.map(id =>
             <Select.Option key={id} value={id}>Group - {id}</Select.Option>
@@ -54,7 +54,7 @@ export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds,
       </div>
 
       <div>
-        <b>Choice On Select Disable</b>
+        <b>Disable When Selected (Optional)</b>
         <Select style={{ width: '100%' }} mode="multiple" value={onSelected?.disable} onChange={value => updateChoice(uuid, { ...choice, onSelected: { ...onSelected, disable: value.length === 0 ? undefined : value } })}>
           {groupIds.map(id =>
             <Select.Option key={id} value={id}>Group - {id}</Select.Option>

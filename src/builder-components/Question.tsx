@@ -40,17 +40,17 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Question ID (Optional)</b>
+        <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateQuestion(uuid, { ...question, id: e.target.value })} />
       </div>
 
       <div>
-        <b>Question Title</b>
+        <b>Title</b>
         <Input value={title} onChange={e => updateQuestion(uuid, { ...question, title: e.target.value })} />
       </div>
 
       <div>
-        <b>Question Default Disabled</b>
+        <b>Default Disabled</b>
         <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateQuestion(uuid, { ...question, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
@@ -58,7 +58,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       </div>
 
       <div>
-        <b>Question Type</b>
+        <b>Type</b>
         <Select style={{ width: '100%' }} value={type} onChange={type => {
           updateQuestion(uuid, { ...question, type, inputType: undefined, validators: [], maxLength: undefined, min: undefined, max: undefined });
         }}>
@@ -71,7 +71,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       {type === 'any' &&
       <>
         <div>
-          <b>Answer Input Type</b>
+          <b>Input Type</b>
           <Select style={{ width: '100%' }} value={inputType} onChange={inputType => {
             updateQuestion(uuid, { ...question, inputType, validators: [], maxLength: undefined, min: undefined, max: undefined });
           }}>
@@ -79,7 +79,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
           </Select>
         </div>
         <div>
-          <b>Answer Placeholder (Optional)</b>
+          <b>Placeholder (Optional)</b>
           <Input value={placeholder} onChange={e => updateQuestion(uuid, { ...question, placeholder: e.target.value })} />
         </div>
       </>
@@ -87,7 +87,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
 
       {type === 'any' && inputType === 'string' &&
         <div>
-          <b>Answer Validators</b>
+          <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNull">Not Empty</Select.Option>
             <Select.Option value="email">Email</Select.Option>
@@ -96,7 +96,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       }
       {type === 'single' &&
         <div>
-          <b>Answer Validators</b>
+          <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullSingle">Not Empty</Select.Option>
           </Select>
@@ -104,7 +104,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       }
       {type === 'multiple' &&
         <div>
-          <b>Answer Validators</b>
+          <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullMultiple">Not Empty</Select.Option>
           </Select>
@@ -114,11 +114,11 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       {type === 'multiple' && validators!.includes('notNullMultiple') &&
         <>
           <div>
-            <b>Answer Minimum Choices (Optional)</b>
+            <b>Minimum Choices (Optional)</b>
             <Input type="number" value={min} onChange={e => updateQuestion(uuid, { ...question, min: Number(e.target.value) })} />
           </div>
           <div>
-            <b>Answer Maximum Choices (Optional)</b>
+            <b>Maximum Choices (Optional)</b>
             <Input type="number" value={max} onChange={e => updateQuestion(uuid, { ...question, max: Number(e.target.value) })} />
           </div>
         </>
@@ -127,7 +127,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
       {type === 'any' && inputType === 'string' &&
         <>
           <div>
-            <b>Answer Maximum Length (Optional)</b>
+            <b>Maximum Length (Optional)</b>
             <Input type="number" value={maxLength} onChange={e => updateQuestion(uuid, { ...question, maxLength: Number(e.target.value) })} />
           </div>
         </>

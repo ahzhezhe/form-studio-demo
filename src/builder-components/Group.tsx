@@ -41,17 +41,17 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Group ID (Optional)</b>
+        <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateGroup(uuid, { ...group, id: e.target.value })} />
       </div>
 
       <div>
-        <b>Group Title</b>
+        <b>Title</b>
         <Input value={title} onChange={e => updateGroup(uuid, { ...group, title: e.target.value })} />
       </div>
 
       <div>
-        <b>Group Default Disabled</b>
+        <b>Default Disabled</b>
         <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateGroup(uuid, { ...group, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
