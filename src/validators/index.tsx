@@ -2,7 +2,11 @@ import { Validator } from 'form-studio';
 
 export const validators: Record<string, Validator> = {
   notNullMultiple: (value, validation) => {
-    const { min, max } = validation;
+    const { max } = validation;
+    let min = validation.min;
+    if (min === undefined) {
+      min = 1;
+    }
     if (!!min && value.length < min) {
       throw new Error(`Please select no less than ${min} option.`);
     }

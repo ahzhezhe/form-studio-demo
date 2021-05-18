@@ -1,58 +1,58 @@
 import { Button, Input, Select, Space } from 'antd';
-import { ChoiceConfigs, QuestionConfigs } from 'form-studio';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
 import { Choice } from '.';
+import { ChoiceBuilder, QuestionBuilder } from '../pages';
 
 interface Props {
-  question: QuestionConfigs;
-  updateQuestion: (questionId: string, question: QuestionConfigs) => void;
-  removeQuestion: (questionId: string) => void;
+  question: QuestionBuilder;
+  updateQuestion: (uuid: string, question: QuestionBuilder) => void;
+  removeQuestion: (uuid: string) => void;
   groupIds: string[];
   questionIds: string[];
   choiceIds: string[];
 }
 
 export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, groupIds, questionIds, choiceIds }) => {
-  const { id, type, ui, defaultDisabled, choices, validators, validation } = question;
+  const { uuid, id, type, inputType, title, placeholder, defaultDisabled, choices, validators, maxLength, min, max } = question;
 
   const addChoice = () => {
-    updateQuestion(id!, {
+    updateQuestion(uuid, {
       ...question, choices: [...choices!, {
-        id: shortUuid.generate(),
+        uuid: shortUuid.generate(),
         defaultDisabled: false,
         value: '',
-        ui: { title: '' },
+        title: '',
         onSelected: { }
       }]
     });
   };
 
-  const updateChoice = (choiceId: string, choice: ChoiceConfigs) => {
-    const newChoices = choices!.map(c => c.id !== choiceId ? c : choice);
-    updateQuestion(id!, { ...question, choices: newChoices });
+  const updateChoice = (uuid: string, choice: ChoiceBuilder) => {
+    const newChoices = choices!.map(c => c.uuid !== uuid ? c : choice);
+    updateQuestion(question.uuid, { ...question, choices: newChoices });
   };
 
-  const removeChoice = (choiceId: string) => {
-    const newChoices = choices!.filter(c => c.id !== choiceId);
-    updateQuestion(id!, { ...question, choices: newChoices });
+  const removeChoice = (uuid: string) => {
+    const newChoices = choices!.filter(c => c.uuid !== uuid);
+    updateQuestion(question.uuid, { ...question, choices: newChoices });
   };
 
   return (
     <Space direction="vertical" style={{ width: '100%', backgroundColor: '#F0F0F0', padding: 16 }}>
       <div>
-        <b>Question ID</b>
-        <Input value={id} onChange={e => updateQuestion(id!, { ...question, id: e.target.value })} />
+        <b>Question ID (Auto-generated if left blank)</b>
+        <Input value={id} onChange={e => updateQuestion(uuid, { ...question, id: e.target.value })} />
       </div>
 
       <div>
         <b>Question Title</b>
-        <Input value={ui!.title as string} onChange={e => updateQuestion(id!, { ...question, ui: { ...question.ui, title: e.target.value } })} />
+        <Input value={title} onChange={e => updateQuestion(uuid, { ...question, title: e.target.value })} />
       </div>
 
       <div>
         <b>Question Default Disabled</b>
-        <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateQuestion(id!, { ...question, defaultDisabled: !!value })}>
+        <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateQuestion(uuid, { ...question, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
         </Select>
@@ -61,7 +61,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
       <div>
         <b>Question Type</b>
         <Select style={{ width: '100%' }} value={type} onChange={type => {
-          updateQuestion(id!, { ...question, type, ui: { ...ui, inputType: undefined }, validators: [], validation: {} });
+          updateQuestion(uuid, { ...question, type, inputType: undefined, validators: [], maxLength: undefined, min: undefined, max: undefined });
         }}>
           <Select.Option value="any">Input</Select.Option>
           <Select.Option value="single">Radio Button Group</Select.Option>
@@ -70,20 +70,26 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
       </div>
 
       {type === 'any' &&
+      <>
         <div>
           <b>Answer Input Type</b>
-          <Select style={{ width: '100%' }} value={ui!.inputType as string} onChange={inputType => {
-            updateQuestion(id!, { ...question, ui: { ...question.ui, inputType }, validators: [], validation: {} });
+          <Select style={{ width: '100%' }} value={inputType} onChange={inputType => {
+            updateQuestion(uuid, { ...question, inputType, validators: [], maxLength: undefined, min: undefined, max: undefined });
           }}>
             <Select.Option value="string">Text</Select.Option>
           </Select>
         </div>
+        <div>
+          <b>Answer Placeholder (Optional)</b>
+          <Input value={placeholder} onChange={e => updateQuestion(uuid, { ...question, placeholder: e.target.value })} />
+        </div>
+      </>
       }
 
-      {type === 'any' && ui!.inputType === 'string' &&
+      {type === 'any' && inputType === 'string' &&
         <div>
           <b>Answer Validators</b>
-          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(id!, { ...question, validators })}>
+          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNull">Not Empty</Select.Option>
             <Select.Option value="email">Email</Select.Option>
           </Select>
@@ -92,7 +98,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
       {type === 'single' &&
         <div>
           <b>Answer Validators</b>
-          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(id!, { ...question, validators })}>
+          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullSingle">Not Empty</Select.Option>
           </Select>
         </div>
@@ -100,7 +106,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
       {type === 'multiple' &&
         <div>
           <b>Answer Validators</b>
-          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(id!, { ...question, validators })}>
+          <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullMultiple">Not Empty</Select.Option>
           </Select>
         </div>
@@ -109,21 +115,21 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
       {type === 'multiple' && validators!.includes('notNullMultiple') &&
         <>
           <div>
-            <b>Answer Minimum Selection</b>
-            <Input type="number" value={validation!.min as number} onChange={e => updateQuestion(id!, { ...question, validation: { ...question.validation, min: e.target.value } })} />
+            <b>Answer Minimum Choices (Optional)</b>
+            <Input type="number" value={min} onChange={e => updateQuestion(uuid, { ...question, min: Number(e.target.value) })} />
           </div>
           <div>
-            <b>Answer Maximum Selection</b>
-            <Input type="number" value={validation!.max as number} onChange={e => updateQuestion(id!, { ...question, validation: { ...question.validation, max: e.target.value } })} />
+            <b>Answer Maximum Choices (Optional)</b>
+            <Input type="number" value={max} onChange={e => updateQuestion(uuid, { ...question, max: Number(e.target.value) })} />
           </div>
         </>
       }
 
-      {type === 'any' && ui!.inputType === 'string' &&
+      {type === 'any' && inputType === 'string' &&
         <>
           <div>
-            <b>Answer Maximum Length</b>
-            <Input type="number" value={ui!.maxLength as number} onChange={e => updateQuestion(id!, { ...question, ui: { ...question.ui, maxLength: e.target.value } })} />
+            <b>Answer Maximum Length (Optional)</b>
+            <Input type="number" value={maxLength} onChange={e => updateQuestion(uuid, { ...question, maxLength: Number(e.target.value) })} />
           </div>
         </>
       }
@@ -135,7 +141,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
             <Space direction="vertical" style={{ width: '100%' }}>
               {choices!.map(choice =>
                 <Choice
-                  key={choice.id}
+                  key={choice.uuid}
                   choice={choice}
                   updateChoice={updateChoice}
                   removeChoice={removeChoice}
@@ -146,11 +152,11 @@ export const Question: FC<Props> = ({ question, updateQuestion, removeQuestion, 
               )}
             </Space>
           </div>
-          <Button type="primary" ghost onClick={addChoice}>+ Add Choice</Button>
+          <Button type="primary" onClick={addChoice}>+ Add Choice</Button>
         </>
       }
 
-      <Button danger onClick={() => removeQuestion(id!)}>Remove Question</Button>
+      <Button danger onClick={() => removeQuestion(uuid)}>Remove Question</Button>
     </Space>
   );
 };

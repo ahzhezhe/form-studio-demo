@@ -1,21 +1,83 @@
 import { Button, Collapse, Divider, Space } from 'antd';
 import shortUuid from 'short-uuid';
-import { Configs, GroupConfigs } from 'form-studio';
+import { ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Group } from '../builder-components';
 import { mockBackend } from '../mock-backend';
 
+export interface GroupBuilder {
+  uuid: string;
+  id?: string;
+  defaultDisabled: boolean;
+  title: string;
+  questions: QuestionBuilder[];
+}
+
+export interface QuestionBuilder {
+  uuid: string;
+  id?: string;
+  defaultDisabled: boolean;
+  type: QuestionType;
+  inputType?: string;
+  title: string;
+  placeholder?: string;
+  choices: ChoiceBuilder[];
+  validators: string[];
+  maxLength?: number;
+  min?: number;
+  max?: number;
+}
+
+export interface ChoiceBuilder {
+  uuid: string;
+  id?: string;
+  defaultDisabled: boolean;
+  value: string;
+  title: string;
+  onSelected: ChoiceOnSelected;
+}
+
 export const BuilderPage: FC = () => {
   const history = useHistory();
   const [configs, setConfigs] = useState<Configs>([]);
+  const [groups, setGroups] = useState<GroupBuilder[]>([]);
   const [groupIds, setGroupIds] = useState<string[]>([]);
   const [questionIds, setQuestionIds] = useState<string[]>([]);
   const [choiceIds, setChoiceIds] = useState<string[]>([]);
 
   useEffect(() => {
     const configs = mockBackend.getConfigs();
-    setConfigs(configs);
+
+    const groups: GroupBuilder[] = configs.map((group): GroupBuilder => ({
+      uuid: shortUuid.generate(),
+      id: group.id,
+      defaultDisabled: !!group.defaultDisabled,
+      title: group.ui?.title as string,
+      questions: (group.questions || []).map((question): QuestionBuilder => ({
+        uuid: shortUuid.generate(),
+        id: question.id,
+        defaultDisabled: !!question.defaultDisabled,
+        type: question.type,
+        inputType: question.ui?.inputType as string,
+        title: question.ui?.title as string,
+        placeholder: question.ui?.placeholder as string,
+        validators: question.validators || [],
+        maxLength: question.ui?.maxLength as number,
+        min: question.validation?.min as number,
+        max: question.validation?.max as number,
+        choices: (question.choices || []).map((choice): ChoiceBuilder => ({
+          uuid: shortUuid.generate(),
+          id: choice.id,
+          defaultDisabled: !!choice.defaultDisabled,
+          value: choice.value as string,
+          title: choice.ui?.title as string,
+          onSelected: choice.onSelected || {}
+        }))
+      }))
+    }));
+
+    setGroups(groups);
   }, []);
 
   useEffect(() => {
@@ -23,7 +85,7 @@ export const BuilderPage: FC = () => {
     const questionIds: string[] = [];
     const choiceIds: string[] = [];
 
-    configs.forEach(group => {
+    groups.forEach(group => {
       if (group.id) {
         groupIds.push(group.id);
       }
@@ -44,36 +106,67 @@ export const BuilderPage: FC = () => {
     setGroupIds(groupIds);
     setQuestionIds(questionIds);
     setChoiceIds(choiceIds);
-  }, [configs]);
+
+    const configs: Configs = groups.map((group): GroupConfigs => ({
+      id: group.id,
+      defaultDisabled: group.defaultDisabled,
+      ui: {
+        title: group.title
+      },
+      questions: group.questions.map((question): QuestionConfigs => ({
+        id: question.id,
+        defaultDisabled: question.defaultDisabled,
+        type: question.type,
+        ui: {
+          inputType: question.inputType,
+          title: question.title,
+          placeholder: question.placeholder,
+          maxLength: question.maxLength
+        },
+        validators: question.validators,
+        validation: {
+          min: question.min,
+          max: question.max
+        },
+        choices: question.choices.map((choice): ChoiceConfigs => ({
+          id: choice.id,
+          defaultDisabled: choice.defaultDisabled,
+          value: choice.value,
+          ui: {
+            title: choice.title
+          },
+          onSelected: choice.onSelected
+        }))
+      }))
+    }));
+
+    setConfigs(configs);
+  }, [groups]);
 
   const saveConfigs = () => {
-    // Validate
-    // if (!form.validate()) {
-    //   alert('There are some invalid answers, please fix them before saving.');
-    //   return;
-    // }
+    // TODO: validate configs first
 
     mockBackend.saveConfigs(configs);
     alert('Configs have been saved.');
   };
 
   const addGroup = () => {
-    setConfigs([...configs, {
-      id: shortUuid.generate(),
+    setGroups([...groups, {
+      uuid: shortUuid.generate(),
       defaultDisabled: false,
-      ui: { title: '' },
+      title: '',
       questions: []
     }]);
   };
 
-  const updateGroup = (groupId: string, group: GroupConfigs) => {
-    const newConfigs = configs.map(g => g.id !== groupId ? g : group);
-    setConfigs(newConfigs);
+  const updateGroup = (uuid: string, group: GroupBuilder) => {
+    const newGroups = groups.map(g => g.uuid !== uuid ? g : group);
+    setGroups(newGroups);
   };
 
-  const removeGroup = (groupId: string) => {
-    const newConfigs = configs.filter(g => g.id !== groupId);
-    setConfigs(newConfigs);
+  const removeGroup = (uuid: string) => {
+    const newGroups = groups.filter(g => g.uuid !== uuid);
+    setGroups(newGroups);
   };
 
   return (
@@ -82,8 +175,8 @@ export const BuilderPage: FC = () => {
 
       <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
         <Collapse>
-          {configs.map(group =>
-            <Collapse.Panel key={group.id!} header={group.ui!.title || 'Untitled'}>
+          {groups.map(group =>
+            <Collapse.Panel key={group.uuid} header={group.title || 'Untitled'}>
               <Group
                 group={group}
                 updateGroup={updateGroup}
@@ -96,9 +189,9 @@ export const BuilderPage: FC = () => {
           )}
         </Collapse>
 
-        <Button type="primary" ghost onClick={addGroup}>+ Add Group</Button>
+        <Button type="primary" onClick={addGroup}>+ Add Group</Button>
 
-        <Button type="primary" onClick={saveConfigs}>Save</Button>
+        <Button style={{ marginTop: 16 }} type="primary" size="large" onClick={saveConfigs}>Save</Button>
 
         <Divider />
 

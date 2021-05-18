@@ -1,42 +1,40 @@
 import { Button, Input, Select, Space } from 'antd';
-import { GroupConfigs, QuestionConfigs } from 'form-studio';
 import React, { FC } from 'react';
-import { Question } from '.';
 import shortUuid from 'short-uuid';
+import { Question } from '.';
+import { GroupBuilder, QuestionBuilder } from '../pages';
 
 interface Props {
-  group: GroupConfigs;
-  updateGroup: (groupId: string, group: GroupConfigs) => void;
-  removeGroup: (groupId: string) => void;
+  group: GroupBuilder;
+  updateGroup: (uuid: string, group: GroupBuilder) => void;
+  removeGroup: (uuid: string) => void;
   groupIds: string[];
   questionIds: string[];
   choiceIds: string[];
 }
 
 export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, questionIds, choiceIds }) => {
-  const { id, defaultDisabled, ui, questions } = group;
-  const { title } = ui!;
+  const { uuid, id, defaultDisabled, title, questions } = group;
 
-  const updateQuestion = (questionId: string, question: QuestionConfigs) => {
-    const newQuestions = questions!.map(q => q.id !== questionId ? q : question);
-    updateGroup(id!, { ...group, questions: newQuestions });
+  const updateQuestion = (uuid: string, question: QuestionBuilder) => {
+    const newQuestions = questions!.map(q => q.uuid !== uuid ? q : question);
+    updateGroup(group.uuid, { ...group, questions: newQuestions });
   };
 
-  const removeQuestion = (questionId: string) => {
-    const newQuestions = questions!.filter(q => q.id !== questionId);
-    updateGroup(id!, { ...group, questions: newQuestions });
+  const removeQuestion = (uuid: string) => {
+    const newQuestions = questions!.filter(q => q.uuid !== uuid);
+    updateGroup(group.uuid, { ...group, questions: newQuestions });
   };
 
   const addQuestion = () => {
-    updateGroup(id!, {
+    updateGroup(uuid, {
       ...group, questions: [...questions!, {
-        id: shortUuid.generate(),
+        uuid: shortUuid.generate(),
         defaultDisabled: false,
         type: 'any',
         choices: [],
         validators: [],
-        validation: {},
-        ui: { title: '' }
+        title: ''
       }]
     });
   };
@@ -44,18 +42,18 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <div>
-        <b>Group ID</b>
-        <Input value={id} onChange={e => updateGroup(id!, { ...group, id: e.target.value })} />
+        <b>Group ID (Auto-generated if left blank)</b>
+        <Input value={id} onChange={e => updateGroup(uuid, { ...group, id: e.target.value })} />
       </div>
 
       <div>
         <b>Group Title</b>
-        <Input value={title as string} onChange={e => updateGroup(id!, { ...group, ui: { ...group.ui, title: e.target.value } })} />
+        <Input value={title} onChange={e => updateGroup(uuid, { ...group, title: e.target.value })} />
       </div>
 
       <div>
         <b>Group Default Disabled</b>
-        <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateGroup(id!, { ...group, defaultDisabled: !!value })}>
+        <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateGroup(uuid, { ...group, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
         </Select>
@@ -66,7 +64,7 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
         <Space direction="vertical" style={{ width: '100%' }}>
           {questions!.map(question =>
             <Question
-              key={question.id}
+              key={question.uuid}
               question={question}
               updateQuestion={updateQuestion}
               removeQuestion={removeQuestion}
@@ -78,9 +76,9 @@ export const Group: FC<Props> = ({ group, updateGroup, removeGroup, groupIds, qu
         </Space>
       </div>
 
-      <Button type="primary" ghost onClick={addQuestion}>+ Add Question</Button>
+      <Button type="primary" onClick={addQuestion}>+ Add Question</Button>
 
-      <Button danger onClick={() => removeGroup(id!)}>Remove Group</Button>
+      <Button danger onClick={() => removeGroup(uuid)}>Remove Group</Button>
     </Space>
   );
 };
