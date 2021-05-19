@@ -4,7 +4,7 @@ const questions: QuestionConfigs[] = [];
 
 questions.push({
   id: 'subscribe',
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'Would you like to subscribe to our mailing list?'
   },

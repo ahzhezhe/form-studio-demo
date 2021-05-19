@@ -4,7 +4,7 @@ const questions: QuestionConfigs[] = [];
 
 questions.push({
   id: 'programmingLanguages',
-  type: 'multiple',
+  type: 'choices',
   custom: {
     title: 'What programming languages have you used in the past?',
     min: 1
@@ -38,7 +38,7 @@ questions.push({
 questions.push({
   id: 'react',
   defaultDisabled: true,
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'Have you used React in the past?'
   },
@@ -64,7 +64,7 @@ questions.push({
 questions.push({
   id: 'spring',
   defaultDisabled: true,
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'Have you used Spring in the past?'
   },

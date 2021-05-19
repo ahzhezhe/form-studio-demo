@@ -4,7 +4,7 @@ const questions: QuestionConfigs[] = [];
 
 questions.push({
   id: 'softwareDeveloper',
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'Are you a software developer?'
   },
@@ -18,7 +18,7 @@ questions.push({
 questions.push({
   id: 'jobProfession',
   defaultDisabled: true,
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'What is your job profession?'
   },

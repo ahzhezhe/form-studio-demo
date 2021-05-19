@@ -63,8 +63,8 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
           updateQuestion(uuid, { ...question, type, inputType: undefined, validators: [], maxLength: undefined, min: undefined, max: undefined });
         }}>
           <Select.Option value="any">Input</Select.Option>
-          <Select.Option value="single">Radio Button Group</Select.Option>
-          <Select.Option value="multiple">Checkbox Group</Select.Option>
+          <Select.Option value="choice">Radio Button Group</Select.Option>
+          <Select.Option value="choices">Checkbox Group</Select.Option>
         </Select>
       </div>
 
@@ -94,7 +94,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
           </Select>
         </div>
       }
-      {type === 'single' &&
+      {type === 'choices' &&
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
@@ -102,7 +102,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
           </Select>
         </div>
       }
-      {type === 'multiple' &&
+      {type === 'choices' &&
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
@@ -111,7 +111,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
         </div>
       }
 
-      {type === 'multiple' && validators!.includes('notNullMultiple') &&
+      {type === 'choices' && validators!.includes('notNullMultiple') &&
         <>
           <div>
             <b>Minimum Choices (Optional)</b>

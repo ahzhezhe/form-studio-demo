@@ -17,10 +17,10 @@ export const Question: FC<Props> = ({ form, question }) => {
   if (type === 'any') {
     return <AnyInput form={form} question={question} />;
   }
-  if (type === 'single') {
+  if (type === 'choice') {
     return <RadioGroup form={form} question={question} />;
   }
-  if (type === 'multiple') {
+  if (type === 'choices') {
     return <CheckboxGroup form={form} question={question} />;
   }
 

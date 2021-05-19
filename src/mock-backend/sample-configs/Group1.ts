@@ -16,7 +16,7 @@ questions.push({
 
 questions.push({
   id: 'gender',
-  type: 'single',
+  type: 'choice',
   custom: {
     title: 'What is your gender?'
   },

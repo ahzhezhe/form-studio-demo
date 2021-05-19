@@ -4,7 +4,7 @@ const questions: QuestionConfigs[] = [];
 
 questions.push({
   id: 'colors',
-  type: 'multiple',
+  type: 'choices',
   custom: {
     title: 'What colors do you like?',
     min: 1
