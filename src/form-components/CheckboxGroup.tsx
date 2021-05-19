@@ -22,7 +22,7 @@ export const CheckboxGroup: FC<Props> = ({ form, question }) => {
             <Checkbox
               value={choice.value}
               disabled={choice.disabled}>
-              {choice.custom.title as string}
+              {choice.custom.title}
             </Checkbox>
           </div>
         ))}

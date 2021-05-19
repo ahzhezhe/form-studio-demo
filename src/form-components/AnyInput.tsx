@@ -16,8 +16,8 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
     switch (inputType) {
       case 'string':
         return <Input
-          placeholder={placeholder as string}
-          maxLength={maxLength as number}
+          placeholder={placeholder}
+          maxLength={maxLength}
           value={currentAnswer}
           onChange={e => form.setAnswer(id, e.target.value)} />;
     }
