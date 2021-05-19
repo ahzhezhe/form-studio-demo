@@ -60,8 +60,8 @@ export const FormPage: FC = () => {
   };
 
   const renderGroup = (group: GroupRenderInstructions) => {
-    const { id, disabled, ui, questions } = group;
-    const { title } = ui;
+    const { id, disabled, custom, questions } = group;
+    const { title } = custom;
 
     if (disabled) {
       return null;

@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const AnyInput: FC<Props> = ({ form, question }) => {
-  const { id, ui, error, currentAnswer } = question;
-  const { inputType, title, placeholder, maxLength, sub } = ui;
+  const { id, custom, error, currentAnswer } = question;
+  const { inputType, title, placeholder, maxLength, sub } = custom;
 
   const renderInput = () => {
     switch (inputType) {

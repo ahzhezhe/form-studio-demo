@@ -5,7 +5,7 @@ const questions: QuestionConfigs[] = [];
 questions.push({
   id: 'name',
   type: 'any',
-  ui: {
+  custom: {
     inputType: 'string',
     title: 'What is your name?',
     placeholder: 'Name',
@@ -17,17 +17,17 @@ questions.push({
 questions.push({
   id: 'gender',
   type: 'single',
-  ui: {
+  custom: {
     title: 'What is your gender?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'male', ui: { title: 'Male' } },
-    { value: 'female', ui: { title: 'Female' } }
+    { value: 'male', custom: { title: 'Male' } },
+    { value: 'female', custom: { title: 'Female' } }
   ]
 });
 
 export const group1: GroupConfigs = {
-  ui: { title: 'Basic Information' },
+  custom: { title: 'Basic Information' },
   questions
 };

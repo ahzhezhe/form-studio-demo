@@ -9,11 +9,11 @@ interface Props {
 }
 
 export const RadioGroup: FC<Props> = ({ form, question }) => {
-  const { id, choices, ui, error, currentAnswer } = question;
+  const { id, choices, custom, error, currentAnswer } = question;
 
   return (
     <div>
-      <h3>{ui.title}</h3>
+      <h3>{custom.title}</h3>
       <div>
         <Radio.Group
           value={currentAnswer}
@@ -22,7 +22,7 @@ export const RadioGroup: FC<Props> = ({ form, question }) => {
             <div key={choice.id}>
               <Radio value={choice.value}
                 disabled={choice.disabled}>
-                {choice.ui.title as string}
+                {choice.custom.title}
               </Radio>
             </div>
           ))}

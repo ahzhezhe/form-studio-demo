@@ -5,19 +5,19 @@ const questions: QuestionConfigs[] = [];
 questions.push({
   id: 'programmingLanguages',
   type: 'multiple',
-  ui: {
-    title: 'What programming languages have you used in the past?'
+  custom: {
+    title: 'What programming languages have you used in the past?',
+    min: 1
   },
   validators: ['notNullMultiple'],
-  validation: { min: 1 },
   choices: [
-    { value: 'javascript', ui: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
-    { value: 'java', ui: { title: 'Java' }, onSelected: { enable: ['spring'] } },
-    { value: 'python', ui: { title: 'Python' } },
-    { value: 'c++', ui: { title: 'C++' } },
-    { value: 'c#', ui: { title: 'C#' } },
-    { value: 'vbnet', ui: { title: 'VB.NET' } },
-    { value: 'others', ui: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthers'] } }
+    { value: 'javascript', custom: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
+    { value: 'java', custom: { title: 'Java' }, onSelected: { enable: ['spring'] } },
+    { value: 'python', custom: { title: 'Python' } },
+    { value: 'c++', custom: { title: 'C++' } },
+    { value: 'c#', custom: { title: 'C#' } },
+    { value: 'vbnet', custom: { title: 'VB.NET' } },
+    { value: 'others', custom: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthers'] } }
   ]
 });
 
@@ -25,7 +25,7 @@ questions.push({
   id: 'programmingLanguagesOthers',
   defaultDisabled: true,
   type: 'any',
-  ui: {
+  custom: {
     inputType: 'string',
     sub: true,
     title: 'Please specify',
@@ -39,13 +39,13 @@ questions.push({
   id: 'react',
   defaultDisabled: true,
   type: 'single',
-  ui: {
+  custom: {
     title: 'Have you used React in the past?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
-    { value: 'false', ui: { title: 'No' } }
+    { value: 'true', custom: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
+    { value: 'false', custom: { title: 'No' } }
   ]
 });
 
@@ -53,7 +53,7 @@ questions.push({
   id: 'reactExperience',
   defaultDisabled: true,
   type: 'any',
-  ui: {
+  custom: {
     inputType: 'string',
     title: 'What did you build with React?',
     maxLength: 100
@@ -65,13 +65,13 @@ questions.push({
   id: 'spring',
   defaultDisabled: true,
   type: 'single',
-  ui: {
+  custom: {
     title: 'Have you used Spring in the past?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', ui: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
-    { value: 'false', ui: { title: 'No' } }
+    { value: 'true', custom: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
+    { value: 'false', custom: { title: 'No' } }
   ]
 });
 
@@ -79,7 +79,7 @@ questions.push({
   id: 'springExperience',
   defaultDisabled: true,
   type: 'any',
-  ui: {
+  custom: {
     inputType: 'string',
     title: 'What did you build with Spring?',
     maxLength: 100
@@ -90,6 +90,6 @@ questions.push({
 export const group3: GroupConfigs = {
   id: 'grpSoftwareDevelopment',
   defaultDisabled: true,
-  ui: { title: 'Software Development' },
+  custom: { title: 'Software Development' },
   questions
 };

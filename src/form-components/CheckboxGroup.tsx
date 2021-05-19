@@ -1,4 +1,4 @@
-import Form, { ChoiceValue, QuestionRenderInstructions } from 'form-studio';
+import Form, { QuestionRenderInstructions } from 'form-studio';
 import React, { FC } from 'react';
 import { Checkbox } from 'antd';
 import { Error } from '.';
@@ -9,20 +9,20 @@ interface Props {
 }
 
 export const CheckboxGroup: FC<Props> = ({ form, question }) => {
-  const { id, choices, ui, error, currentAnswer } = question;
+  const { id, choices, custom, error, currentAnswer } = question;
 
   return (
     <div>
-      <h3>{ui.title}</h3>
+      <h3>{custom.title}</h3>
       <Checkbox.Group
         value={currentAnswer}
-        onChange={values => form.setChoices(id, values as ChoiceValue[])}>
+        onChange={values => form.setChoices(id, values)}>
         {choices!.map(choice => (
           <div key={choice.id}>
             <Checkbox
               value={choice.value}
               disabled={choice.disabled}>
-              {choice.ui.title as string}
+              {choice.custom.title as string}
             </Checkbox>
           </div>
         ))}

@@ -1,9 +1,9 @@
 import { Validator } from 'form-studio';
 
 export const validators: Record<string, Validator> = {
-  notNullMultiple: (value, validation) => {
-    const { max } = validation;
-    let min = validation.min;
+  notNullMultiple: (value, { custom }) => {
+    const { max } = custom;
+    let min = custom.min;
     if (min === undefined) {
       min = 1;
     }

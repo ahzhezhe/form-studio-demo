@@ -54,25 +54,25 @@ export const BuilderPage: FC = () => {
       uuid: shortUuid.generate(),
       id: group.id,
       defaultDisabled: !!group.defaultDisabled,
-      title: group.ui?.title as string,
+      title: group.custom?.title,
       questions: (group.questions || []).map((question): QuestionBuilder => ({
         uuid: shortUuid.generate(),
         id: question.id,
         defaultDisabled: !!question.defaultDisabled,
         type: question.type,
-        inputType: question.ui?.inputType as string,
-        title: question.ui?.title as string,
-        placeholder: question.ui?.placeholder as string,
+        inputType: question.custom?.inputType,
+        title: question.custom?.title,
+        placeholder: question.custom?.placeholder,
         validators: question.validators || [],
-        maxLength: question.ui?.maxLength as number,
-        min: question.validation?.min as number,
-        max: question.validation?.max as number,
+        maxLength: question.custom?.maxLength,
+        min: question.custom?.min,
+        max: question.custom?.max,
         choices: (question.choices || []).map((choice): ChoiceBuilder => ({
           uuid: shortUuid.generate(),
           id: choice.id,
           defaultDisabled: !!choice.defaultDisabled,
-          value: choice.value as string,
-          title: choice.ui?.title as string,
+          value: choice.value,
+          title: choice.custom?.title,
           onSelected: choice.onSelected || {}
         }))
       }))
@@ -111,29 +111,27 @@ export const BuilderPage: FC = () => {
     const configs: Configs = groups.map((group): GroupConfigs => ({
       id: group.id,
       defaultDisabled: group.defaultDisabled,
-      ui: {
+      custom: {
         title: group.title
       },
       questions: group.questions.map((question): QuestionConfigs => ({
         id: question.id,
         defaultDisabled: question.defaultDisabled,
         type: question.type,
-        ui: {
+        custom: {
           inputType: question.inputType,
           title: question.title,
           placeholder: question.placeholder,
-          maxLength: question.maxLength
-        },
-        validators: question.validators,
-        validation: {
+          maxLength: question.maxLength,
           min: question.min,
           max: question.max
         },
+        validators: question.validators,
         choices: question.choices.map((choice): ChoiceConfigs => ({
           id: choice.id,
           defaultDisabled: choice.defaultDisabled,
           value: choice.value,
-          ui: {
+          custom: {
             title: choice.title
           },
           onSelected: choice.onSelected

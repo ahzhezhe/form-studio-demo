@@ -5,22 +5,22 @@ const questions: QuestionConfigs[] = [];
 questions.push({
   id: 'colors',
   type: 'multiple',
-  ui: {
-    title: 'What colors do you like?'
+  custom: {
+    title: 'What colors do you like?',
+    min: 1
   },
   validators: ['notNullMultiple'],
-  validation: { min: 1 },
   choices: [
-    { value: 'colorBlind', ui: { title: 'I am color blind' }, onSelected: { disable: ['red', 'yellow', 'blue', 'green', 'purple', 'white', 'black', 'grey', 'colorsOthersChoice'] } },
-    { id: 'red', ui: { title: 'Red' } },
-    { id: 'yellow', ui: { title: 'Yellow' } },
-    { id: 'blue', ui: { title: 'Blue' } },
-    { id: 'green', ui: { title: 'Green' } },
-    { id: 'purple', ui: { title: 'Purple' } },
-    { id: 'white', ui: { title: 'White' } },
-    { id: 'black', ui: { title: 'Black' } },
-    { id: 'grey', ui: { title: 'Grey' } },
-    { id: 'colorsOthersChoice', value: 'others', ui: { title: 'Others' }, onSelected: { enable: ['colorOthers'] } }
+    { value: 'colorBlind', custom: { title: 'I am color blind' }, onSelected: { disable: ['red', 'yellow', 'blue', 'green', 'purple', 'white', 'black', 'grey', 'colorsOthersChoice'] } },
+    { id: 'red', custom: { title: 'Red' } },
+    { id: 'yellow', custom: { title: 'Yellow' } },
+    { id: 'blue', custom: { title: 'Blue' } },
+    { id: 'green', custom: { title: 'Green' } },
+    { id: 'purple', custom: { title: 'Purple' } },
+    { id: 'white', custom: { title: 'White' } },
+    { id: 'black', custom: { title: 'Black' } },
+    { id: 'grey', custom: { title: 'Grey' } },
+    { id: 'colorsOthersChoice', value: 'others', custom: { title: 'Others' }, onSelected: { enable: ['colorOthers'] } }
   ]
 });
 
@@ -28,7 +28,7 @@ questions.push({
   id: 'colorOthers',
   defaultDisabled: true,
   type: 'any',
-  ui: {
+  custom: {
     inputType: 'string',
     sub: true,
     title: 'Please specify',
@@ -39,6 +39,6 @@ questions.push({
 });
 
 export const group4: GroupConfigs = {
-  ui: { title: 'Color' },
+  custom: { title: 'Color' },
   questions
 };
