@@ -94,7 +94,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
           </Select>
         </div>
       }
-      {type === 'choices' &&
+      {type === 'choice' &&
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
