@@ -1,4 +1,4 @@
-import Form, { QuestionRenderInstructions } from 'form-studio';
+import { Form, QuestionRenderInstructions } from 'form-studio';
 import React, { FC } from 'react';
 import { Checkbox } from 'antd';
 import { Error } from '.';

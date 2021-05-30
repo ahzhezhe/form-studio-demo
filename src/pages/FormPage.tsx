@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, Space } from 'antd';
-import Form, { GroupRenderInstructions, RenderInstructions } from 'form-studio';
+import { Form, GroupRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Question } from '../form-components';

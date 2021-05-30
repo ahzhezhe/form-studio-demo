@@ -1,6 +1,6 @@
 import { Button, Collapse, Divider, Space } from 'antd';
 import shortUuid from 'short-uuid';
-import Form, { ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
+import { Form, ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Group } from '../builder-components';
