@@ -15,7 +15,11 @@ export const FormPage: FC = () => {
 
   useEffect(() => {
     const configs = mockBackend.getConfigs();
-    form = new Form(configs, validators, true, form => setRenderInstructions(form.getRenderInstructions()));
+    form = new Form(configs, {
+      validators,
+      skipValidations: true,
+      onFormUpdate: form => setRenderInstructions(form.getRenderInstructions())
+    });
   }, []);
 
   const restoreAnswers = () => {
