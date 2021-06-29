@@ -10,7 +10,7 @@ let form: Form;
 
 export const FormPage: FC = () => {
   const history = useHistory();
-  const [renderInstructions, setRenderInstructions] = useState<RenderInstructions>([]);
+  const [renderInstructions, setRenderInstructions] = useState<RenderInstructions>();
   const [output, setOutput] = useState<any>();
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const FormPage: FC = () => {
         </Space>
 
         <Collapse style={{ marginTop: 16 }}>
-          {renderInstructions.map(group => renderGroup(group))}
+          {renderInstructions?.groups.map(group => renderGroup(group))}
         </Collapse>
 
         <Button style={{ marginTop: 16 }} type="primary" onClick={saveAnswers}>Save Answers</Button>

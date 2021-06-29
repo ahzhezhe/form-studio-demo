@@ -40,7 +40,7 @@ export interface ChoiceBuilder {
 
 export const BuilderPage: FC = () => {
   const history = useHistory();
-  const [configs, setConfigs] = useState<Configs>([]);
+  const [configs, setConfigs] = useState<Configs>();
   const [groups, setGroups] = useState<GroupBuilder[]>([]);
   const [groupIds, setGroupIds] = useState<string[]>([]);
   const [questionIds, setQuestionIds] = useState<string[]>([]);
@@ -50,7 +50,7 @@ export const BuilderPage: FC = () => {
   useEffect(() => {
     const configs = mockBackend.getConfigs();
 
-    const groups: GroupBuilder[] = configs.map((group): GroupBuilder => ({
+    const groups: GroupBuilder[] = configs.groups!.map((group): GroupBuilder => ({
       uuid: shortUuid.generate(),
       id: group.id,
       defaultDisabled: !!group.defaultDisabled,
@@ -108,42 +108,44 @@ export const BuilderPage: FC = () => {
     setQuestionIds(questionIds);
     setChoiceIds(choiceIds);
 
-    const configs: Configs = groups.map((group): GroupConfigs => ({
-      id: group.id,
-      defaultDisabled: group.defaultDisabled,
-      custom: {
-        title: group.title
-      },
-      questions: group.questions.map((question): QuestionConfigs => ({
-        id: question.id,
-        defaultDisabled: question.defaultDisabled,
-        type: question.type,
+    const configs: Configs = {
+      groups: groups.map((group): GroupConfigs => ({
+        id: group.id,
+        defaultDisabled: group.defaultDisabled,
         custom: {
-          inputType: question.inputType,
-          title: question.title,
-          placeholder: question.placeholder,
-          maxLength: question.maxLength,
-          min: question.min,
-          max: question.max
+          title: group.title
         },
-        validators: question.validators,
-        choices: question.choices.map((choice): ChoiceConfigs => ({
-          id: choice.id,
-          defaultDisabled: choice.defaultDisabled,
-          value: choice.value,
+        questions: group.questions.map((question): QuestionConfigs => ({
+          id: question.id,
+          defaultDisabled: question.defaultDisabled,
+          type: question.type,
           custom: {
-            title: choice.title
+            inputType: question.inputType,
+            title: question.title,
+            placeholder: question.placeholder,
+            maxLength: question.maxLength,
+            min: question.min,
+            max: question.max
           },
-          onSelected: choice.onSelected
+          validators: question.validators,
+          choices: question.choices.map((choice): ChoiceConfigs => ({
+            id: choice.id,
+            defaultDisabled: choice.defaultDisabled,
+            value: choice.value,
+            custom: {
+              title: choice.title
+            },
+            onSelected: choice.onSelected
+          }))
         }))
       }))
-    }));
+    };
 
     setConfigs(configs);
   }, [groups]);
 
   const saveConfigs = () => {
-    const result = Form.validateConfigs(configs);
+    const result = Form.validateConfigs(configs!);
     if (!result.pass) {
       let errorMsg = '';
       Object.entries(result.errors!).forEach(([key, errors]) => {
@@ -155,7 +157,7 @@ export const BuilderPage: FC = () => {
 
     // TODO: need to do more custom validation, e.g. title cannot be empty, etc.
 
-    mockBackend.saveConfigs(configs);
+    mockBackend.saveConfigs(configs!);
     alert('Configs have been saved.');
   };
 
