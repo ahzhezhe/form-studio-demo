@@ -27,8 +27,9 @@ export const FormPage: FC = () => {
     form.importAnswers(answers);
   };
 
-  const saveAnswers = () => {
-    if (!form.validate()) {
+  const saveAnswers = async () => {
+    const isClean = await form.validate();
+    if (!isClean) {
       alert('There are some invalid answers, please fix them before saving.');
       return;
     }
@@ -58,8 +59,8 @@ export const FormPage: FC = () => {
     setOutput(output);
   };
 
-  const validate = () => {
-    const output = form.validate();
+  const validate = async () => {
+    const output = await form.validate();
     setOutput(output);
   };
 
