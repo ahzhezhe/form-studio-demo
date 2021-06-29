@@ -17,7 +17,7 @@ export const FormPage: FC = () => {
     const configs = mockBackend.getConfigs();
     form = new Form(configs, {
       validators,
-      skipValidations: true,
+      validate: false,
       onFormUpdate: form => setRenderInstructions(form.getRenderInstructions())
     });
   }, []);
@@ -74,7 +74,7 @@ export const FormPage: FC = () => {
     return (
       <Collapse.Panel key={id} header={title}>
         <div style={{ padding: 8 }}>
-          <Button danger onClick={() => form.clearGroup(id, true)}>Clear This Section</Button>
+          <Button danger onClick={() => form.clearGroup(id, { validate: false })}>Clear This Section</Button>
           <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', rowGap: 32 }}>
             {questions.map(question =>
               <Question key={question.id} form={form} question={question} />
@@ -92,7 +92,7 @@ export const FormPage: FC = () => {
       <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
 
         <Space>
-          <Button danger onClick={() => form.clear(true)}>Clear Entire Form</Button>
+          <Button danger onClick={() => form.clear({ validate: false })}>Clear Entire Form</Button>
           <Button type="primary" ghost onClick={restoreAnswers}>Restore Saved Answers</Button>
         </Space>
 

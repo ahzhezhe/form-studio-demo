@@ -17,7 +17,7 @@ export const RadioGroup: FC<Props> = ({ form, question }) => {
       <div>
         <Radio.Group
           value={currentAnswer}
-          onChange={e => form.setChoice(id, e.target.value)}>
+          onChange={e => form.setAnswer(id, e.target.value)}>
           {choices!.map(choice => (
             <div key={choice.id}>
               <Radio value={choice.value}

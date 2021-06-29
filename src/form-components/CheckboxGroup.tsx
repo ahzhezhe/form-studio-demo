@@ -16,7 +16,7 @@ export const CheckboxGroup: FC<Props> = ({ form, question }) => {
       <h3>{custom.title}</h3>
       <Checkbox.Group
         value={currentAnswer}
-        onChange={values => form.setChoices(id, values)}>
+        onChange={values => form.setAnswer(id, values)}>
         {choices!.map(choice => (
           <div key={choice.id}>
             <Checkbox
