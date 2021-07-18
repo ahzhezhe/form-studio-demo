@@ -27,7 +27,7 @@ export const RadioGroup: FC<Props> = ({ form, question }) => {
             </div>
           ))}
         </Radio.Group>
-        <Error>{error?.message}</Error>
+        <Error>{(error as Error)?.message}</Error>
       </div>
     </div>
   );

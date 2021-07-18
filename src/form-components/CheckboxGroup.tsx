@@ -15,7 +15,7 @@ export const CheckboxGroup: FC<Props> = ({ form, question }) => {
     <div>
       <h3>{custom.title}</h3>
       <Checkbox.Group
-        value={currentAnswer}
+        value={currentAnswer as any}
         onChange={values => form.setAnswer(id, values)}>
         {choices!.map(choice => (
           <div key={choice.id}>
@@ -27,7 +27,7 @@ export const CheckboxGroup: FC<Props> = ({ form, question }) => {
           </div>
         ))}
       </Checkbox.Group>
-      <Error>{error?.message}</Error>
+      <Error>{(error as Error)?.message}</Error>
     </div>
   );
 };

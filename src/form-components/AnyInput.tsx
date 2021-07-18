@@ -18,7 +18,7 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
         return <Input
           placeholder={placeholder}
           maxLength={maxLength}
-          value={currentAnswer}
+          value={currentAnswer as string}
           onChange={e => form.setAnswer(id, e.target.value)} />;
     }
   };
@@ -28,7 +28,7 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
       <h3>{title}</h3>
       <div>
         {renderInput()}
-        <Error>{error?.message}</Error>
+        <Error>{(error as Error)?.message}</Error>
       </div>
     </div>
   );
