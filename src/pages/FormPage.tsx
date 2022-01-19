@@ -28,14 +28,13 @@ export const FormPage: FC = () => {
   };
 
   const saveAnswers = async () => {
-    const isClean = await form.validate();
-    if (!isClean) {
+    const validatedAnswers = await form.validateAndGetAnswers();
+    if (!validatedAnswers) {
       alert('There are some invalid answers, please fix them before saving.');
       return;
     }
 
-    const answers = form.getValidatedAnswers();
-    mockBackend.saveAnswers(answers);
+    mockBackend.saveAnswers(validatedAnswers);
     alert('Your answers have been saved.');
   };
 
@@ -59,8 +58,13 @@ export const FormPage: FC = () => {
     setOutput(output);
   };
 
-  const validate = async () => {
-    const output = await form.validate();
+  const getErrors = () => {
+    const output = form.getErrors();
+    setOutput(output);
+  };
+
+  const validate = () => {
+    const output = form.validate();
     setOutput(output);
   };
 
@@ -111,6 +115,7 @@ export const FormPage: FC = () => {
           <Button onClick={validate}>Validate</Button>
           <Button onClick={getCurrentAnswers}>Current Answers</Button>
           <Button onClick={getValidatedAnswers}>Validated Answers</Button>
+          <Button onClick={getErrors}>Errors</Button>
         </Space>
 
         <pre style={{ fontSize: 12 }}>{JSON.stringify(output, null, 2)}</pre>
