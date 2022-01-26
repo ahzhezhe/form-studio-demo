@@ -28,7 +28,7 @@ export const FormPage: FC = () => {
   };
 
   const saveAnswers = async () => {
-    const validatedAnswers = await form.validateAndGetAnswers();
+    const validatedAnswers = await form.asyncValidate();
     if (!validatedAnswers) {
       alert('There are some invalid answers, please fix them before saving.');
       return;
