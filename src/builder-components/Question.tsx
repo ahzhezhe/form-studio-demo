@@ -1,8 +1,8 @@
 import { Button, Collapse, Input, Select, Space } from 'antd';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
-import { Choice } from '.';
 import { ChoiceBuilder, QuestionBuilder } from '../pages';
+import { Choice } from '.';
 
 interface Props {
   question: QuestionBuilder;
@@ -68,24 +68,24 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
         </Select>
       </div>
 
-      {type === 'any' &&
-      <>
-        <div>
-          <b>Input Type</b>
-          <Select style={{ width: '100%' }} value={inputType} onChange={inputType => {
-            updateQuestion(uuid, { ...question, inputType, validators: [], maxLength: undefined, min: undefined, max: undefined });
-          }}>
-            <Select.Option value="string">Text</Select.Option>
-          </Select>
-        </div>
-        <div>
-          <b>Placeholder (Optional)</b>
-          <Input value={placeholder} onChange={e => updateQuestion(uuid, { ...question, placeholder: e.target.value })} />
-        </div>
-      </>
-      }
+      {type === 'any' && (
+        <>
+          <div>
+            <b>Input Type</b>
+            <Select style={{ width: '100%' }} value={inputType} onChange={inputType => {
+              updateQuestion(uuid, { ...question, inputType, validators: [], maxLength: undefined, min: undefined, max: undefined });
+            }}>
+              <Select.Option value="string">Text</Select.Option>
+            </Select>
+          </div>
+          <div>
+            <b>Placeholder (Optional)</b>
+            <Input value={placeholder} onChange={e => updateQuestion(uuid, { ...question, placeholder: e.target.value })} />
+          </div>
+        </>
+      )}
 
-      {type === 'any' && inputType === 'string' &&
+      {type === 'any' && inputType === 'string' && (
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
@@ -93,25 +93,27 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
             <Select.Option value="email">Email</Select.Option>
           </Select>
         </div>
-      }
-      {type === 'choice' &&
+      )}
+
+      {type === 'choice' && (
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullSingle">Not Empty</Select.Option>
           </Select>
         </div>
-      }
-      {type === 'choices' &&
+      )}
+
+      {type === 'choices' && (
         <div>
           <b>Validators (Optional)</b>
           <Select style={{ width: '100%' }} mode="multiple" value={validators} onChange={validators => updateQuestion(uuid, { ...question, validators })}>
             <Select.Option value="notNullMultiple">Not Empty</Select.Option>
           </Select>
         </div>
-      }
+      )}
 
-      {type === 'choices' && validators!.includes('notNullMultiple') &&
+      {type === 'choices' && validators!.includes('notNullMultiple') && (
         <>
           <div>
             <b>Minimum Choices (Optional)</b>
@@ -122,33 +124,33 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
             <Input type="number" value={max} onChange={e => updateQuestion(uuid, { ...question, max: Number(e.target.value) })} />
           </div>
         </>
-      }
+      )}
 
-      {type === 'any' && inputType === 'string' &&
+      {type === 'any' && inputType === 'string' && (
         <>
           <div>
             <b>Maximum Length (Optional)</b>
             <Input type="number" value={maxLength} onChange={e => updateQuestion(uuid, { ...question, maxLength: Number(e.target.value) })} />
           </div>
         </>
-      }
+      )}
 
-      {type !== 'any' &&
+      {type !== 'any' && (
         <>
           <div>
             <b>Choices</b>
             <Collapse>
-              {choices.map(choice =>
+              {choices.map(choice => (
                 <Collapse.Panel key={choice.uuid}
-                  header={
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  header={(
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                       <div>{choice.title || 'Untitled'}</div>
-                      <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                      <div style={{ color: 'red', cursor: 'pointer' }} onClick={e => {
                         removeChoice(choice.uuid);
-                        event.stopPropagation();
+                        e.stopPropagation();
                       }}>Remove</div>
                     </div>
-                  }>
+                  )}>
                   <Choice
                     key={choice.uuid}
                     choice={choice}
@@ -158,12 +160,13 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
                     choiceIds={choiceIds}
                   />
                 </Collapse.Panel>
+              )
               )}
             </Collapse>
           </div>
           <Button type="primary" onClick={addChoice}>+ Add Choice</Button>
         </>
-      }
+      )}
     </Space>
   );
 };

@@ -1,5 +1,4 @@
 {
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -11,16 +10,60 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "rules": {
     "react/prop-types": "off",
     "react/display-name": "off",
+    "react/prefer-stateless-function": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-curly-spacing": "error",
+    "react/jsx-equals-spacing": [
+      "error",
+      "never"
+    ],
+    "react/jsx-boolean-value": [
+      "error",
+      "never"
+    ],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "parens-new-line",
+        "prop": "parens-new-line"
+      }
+    ],
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "beforeSelfClosing": "always",
+        "closingSlash": "never",
+        "afterOpening": "never",
+        "beforeClosing": "never"
+      }
+    ],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "ignore"
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/comma-spacing": "error",
@@ -82,6 +125,22 @@
         "format": [
           "StrictPascalCase"
         ]
+      },
+      {
+        "selector": "variable",
+        "modifiers": [
+          "destructured"
+        ],
+        "format": null
+      },
+      {
+        "selector": [
+          "objectLiteralProperty"
+        ],
+        "format": null,
+        "modifiers": [
+          "requiresQuotes"
+        ]
       }
     ],
     "indent": "off",
@@ -127,6 +186,10 @@
       {
         "avoidEscape": true
       }
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
     ],
     "max-len": [
       "error",
@@ -231,6 +294,47 @@
       "error",
       {
         "includeExports": true
+      }
+    ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "line": {
+          "markers": [
+            "/"
+          ]
+        },
+        "block": {
+          "balanced": true
+        }
+      }
+    ],
+    "capitalized-comments": [
+      "error",
+      "always",
+      {
+        "ignoreInlineComments": true,
+        "ignoreConsecutiveComments": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "newlines-between": "never"
+      }
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^react",
+          "^@storybook"
+        ]
       }
     ]
   }

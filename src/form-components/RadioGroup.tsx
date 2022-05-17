@@ -1,6 +1,6 @@
+import { Radio } from 'antd';
 import { Form, QuestionRenderInstructions } from 'form-studio';
 import React, { FC } from 'react';
-import { Radio } from 'antd';
 import { Error } from '.';
 
 interface Props {

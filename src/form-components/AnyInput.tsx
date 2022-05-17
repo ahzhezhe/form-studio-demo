@@ -1,6 +1,6 @@
+import { Input } from 'antd';
 import { Form, QuestionRenderInstructions } from 'form-studio';
 import React, { FC } from 'react';
-import { Input } from 'antd';
 import { Error } from '.';
 
 interface Props {
@@ -15,11 +15,13 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
   const renderInput = () => {
     switch (inputType) {
       case 'string':
-        return <Input
-          placeholder={placeholder}
-          maxLength={maxLength}
-          value={currentAnswer as string}
-          onChange={e => form.setAnswer(id, e.target.value)} />;
+        return (
+          <Input
+            placeholder={placeholder}
+            maxLength={maxLength}
+            value={currentAnswer as string}
+            onChange={e => form.setAnswer(id, e.target.value)} />
+        );
     }
   };
 

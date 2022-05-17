@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { BuilderPage, FormPage, HomePage } from './pages';
-import 'antd/dist/antd.css';
+
+import 'antd/dist/antd.min.css';
 
 export const App: FC = () => (
   <BrowserRouter>
-    <Switch>
-      <Route path="/" exact={true} component={HomePage} />
-      <Route path="/form" exact={true} component={FormPage} />
-      <Route path="/builder" exact={true} component={BuilderPage} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/form" element={<FormPage />} />
+      <Route path="/builder" element={<BuilderPage />} />
+    </Routes>
   </BrowserRouter>
 );

@@ -1,7 +1,7 @@
 import { Button, Collapse, Divider, Space } from 'antd';
 import { Form, GroupRenderInstructions, RenderInstructions } from 'form-studio';
 import React, { FC, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Question } from '../form-components';
 import { mockBackend } from '../mock-backend';
 import { validators } from '../validators';
@@ -9,7 +9,7 @@ import { validators } from '../validators';
 let form: Form;
 
 export const FormPage: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [renderInstructions, setRenderInstructions] = useState<RenderInstructions>();
   const [output, setOutput] = useState<any>();
 
@@ -92,10 +92,9 @@ export const FormPage: FC = () => {
 
   return (
     <>
-      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => history.push('/')}>&lt; Back</Button>
+      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => navigate('/')}>&lt; Back</Button>
 
       <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
-
         <Space>
           <Button danger onClick={() => form.clear({ validate: false })}>Clear Entire Form</Button>
           <Button type="primary" ghost onClick={restoreAnswers}>Restore Saved Answers</Button>

@@ -1,8 +1,8 @@
 import { Button, Collapse, Input, Select, Space } from 'antd';
 import React, { FC } from 'react';
 import shortUuid from 'short-uuid';
-import { Question } from '.';
 import { GroupBuilder, QuestionBuilder } from '../pages';
+import { Question } from '.';
 
 interface Props {
   group: GroupBuilder;
@@ -61,17 +61,17 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
       <div>
         <b>Questions</b>
         <Collapse>
-          {questions.map(question =>
+          {questions.map(question => (
             <Collapse.Panel key={question.uuid}
-              header={
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              header={(
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                   <div>{question.title || 'Untitled'}</div>
-                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={e => {
                     removeQuestion(question.uuid);
-                    event.stopPropagation();
+                    e.stopPropagation();
                   }}>Remove</div>
                 </div>
-              }>
+              )}>
               <Question
                 key={question.uuid}
                 question={question}
@@ -81,7 +81,7 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
                 choiceIds={choiceIds}
               />
             </Collapse.Panel>
-          )}
+          ))}
         </Collapse>
       </div>
 

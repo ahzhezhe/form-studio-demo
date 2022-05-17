@@ -1,14 +1,14 @@
 import { Button, Space } from 'antd';
 import React, { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const HomePage: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Space style={{ padding: 32 }}>
-      <Button type="primary" onClick={() => history.push('/form')}>Form</Button>
-      <Button type="primary" onClick={() => history.push('/builder')}>Form Builder</Button>
+      <Button type="primary" onClick={() => navigate('/form')}>Form</Button>
+      <Button type="primary" onClick={() => navigate('/builder')}>Form Builder</Button>
     </Space>
   );
 };

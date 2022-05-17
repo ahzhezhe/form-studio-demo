@@ -1,8 +1,8 @@
 import { Button, Collapse, Divider, Space } from 'antd';
-import shortUuid from 'short-uuid';
 import { Form, ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import shortUuid from 'short-uuid';
 import { Group } from '../builder-components';
 import { mockBackend } from '../mock-backend';
 
@@ -39,7 +39,7 @@ export interface ChoiceBuilder {
 }
 
 export const BuilderPage: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [configs, setConfigs] = useState<Configs>();
   const [groups, setGroups] = useState<GroupBuilder[]>([]);
   const [groupIds, setGroupIds] = useState<string[]>([]);
@@ -182,21 +182,21 @@ export const BuilderPage: FC = () => {
 
   return (
     <>
-      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => history.push('/')}>&lt; Back</Button>
+      <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => navigate('/')}>&lt; Back</Button>
 
       <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
         <Collapse>
-          {groups.map(group =>
+          {groups.map(group => (
             <Collapse.Panel key={group.uuid}
-              header={
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              header={(
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                   <div>{group.title || 'Untitled'}</div>
-                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={event => {
+                  <div style={{ color: 'red', cursor: 'pointer' }} onClick={e => {
                     removeGroup(group.uuid);
-                    event.stopPropagation();
+                    e.stopPropagation();
                   }}>Remove</div>
                 </div>
-              }>
+              )}>
               <Group
                 group={group}
                 updateGroup={updateGroup}
@@ -205,6 +205,7 @@ export const BuilderPage: FC = () => {
                 choiceIds={choiceIds}
               />
             </Collapse.Panel>
+          )
           )}
         </Collapse>
 
