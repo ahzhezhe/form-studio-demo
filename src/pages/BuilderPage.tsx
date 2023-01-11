@@ -146,7 +146,7 @@ export const BuilderPage: FC = () => {
 
   const saveConfigs = () => {
     const result = Form.validateConfigs(configs!);
-    if (!result.pass) {
+    if (!result.valid) {
       let errorMsg = '';
       Object.entries(result.errors!).forEach(([key, errors]) => {
         errorMsg += `\n${key} - ${errors.join(', ')}`;
