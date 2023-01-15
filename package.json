@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "antd": "4.20.5",
-    "form-studio": "^0.14.0",
+    "form-studio": "^0.14.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.2",
@@ -23,8 +23,8 @@
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
-    "eslint": "^8.31.0",
-    "eslint-plugin-react": "^7.31.11"
+    "eslint": "^8.32.0",
+    "eslint-plugin-react": "^7.32.0"
   },
   "browserslist": {
     "production": [
