@@ -13,22 +13,20 @@ export const RadioGroup: FC<Props> = ({ form, question }) => {
 
   return (
     <div>
-      <h3>{custom.title}</h3>
-      <div>
-        <Radio.Group
-          value={currentAnswer}
-          onChange={e => form.setAnswer(id, e.target.value)}>
-          {choices!.map(choice => (
-            <div key={choice.id}>
-              <Radio value={choice.value}
-                disabled={choice.disabled}>
-                {choice.custom.title}
-              </Radio>
-            </div>
-          ))}
-        </Radio.Group>
-        <Error>{(error as Error)?.message}</Error>
-      </div>
+      <h3 style={{ marginBottom: 8 }}>{custom.title}</h3>
+      <Radio.Group
+        value={currentAnswer}
+        onChange={e => form.setAnswer(id, e.target.value)}>
+        {choices!.map(choice => (
+          <div key={choice.id}>
+            <Radio value={choice.value}
+              disabled={choice.disabled}>
+              {choice.custom.title}
+            </Radio>
+          </div>
+        ))}
+      </Radio.Group>
+      <Error>{(error as Error)?.message}</Error>
     </div>
   );
 };

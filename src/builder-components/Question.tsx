@@ -22,7 +22,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
         defaultDisabled: false,
         value: '',
         title: '',
-        onSelected: { }
+        onSelected: {}
       }]
     });
   };
@@ -38,7 +38,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" style={{ width: '100%', rowGap: 16 }}>
       <div>
         <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateQuestion(uuid, { ...question, id: e.target.value })} />

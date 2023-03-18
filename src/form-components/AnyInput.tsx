@@ -27,7 +27,7 @@ export const AnyInput: FC<Props> = ({ form, question }) => {
 
   return (
     <div style={{ marginTop: sub ? -24 : undefined, paddingLeft: sub ? 24 : undefined }}>
-      <h3>{title}</h3>
+      <h3 style={{ marginBottom: 8 }}>{title}</h3>
       <div>
         {renderInput()}
         <Error>{(error as Error)?.message}</Error>

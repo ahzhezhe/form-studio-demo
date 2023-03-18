@@ -39,7 +39,7 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" style={{ width: '100%', rowGap: 16 }}>
       <div>
         <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateGroup(uuid, { ...group, id: e.target.value })} />

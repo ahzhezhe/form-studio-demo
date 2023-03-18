@@ -13,8 +13,9 @@ export const CheckboxGroup: FC<Props> = ({ form, question }) => {
 
   return (
     <div>
-      <h3>{custom.title}</h3>
+      <h3 style={{ marginBottom: 8 }}>{custom.title}</h3>
       <Checkbox.Group
+        style={{ display: 'flex', flexDirection: 'column' }}
         value={currentAnswer as any}
         onChange={values => form.setAnswer(id, values)}>
         {choices!.map(choice => (

@@ -2,8 +2,6 @@ import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { BuilderPage, FormPage, HomePage } from './pages';
 
-import 'antd/dist/antd.min.css';
-
 export const App: FC = () => (
   <BrowserRouter>
     <Routes>

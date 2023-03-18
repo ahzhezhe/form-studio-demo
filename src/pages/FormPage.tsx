@@ -81,7 +81,7 @@ export const FormPage: FC = () => {
       <Collapse.Panel key={id} header={title}>
         <div style={{ padding: 8 }}>
           <Button danger onClick={() => form.clearGroup(id, { validate: false })}>Clear This Section</Button>
-          <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', rowGap: 32 }}>
+          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', rowGap: 16 }}>
             {questions.map(question =>
               <Question key={question.id} form={form} question={question} />
             )}

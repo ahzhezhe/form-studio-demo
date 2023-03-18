@@ -14,7 +14,7 @@ export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds,
   const { uuid, id, value, title, defaultDisabled, onSelected } = choice;
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" style={{ width: '100%', rowGap: 16 }}>
       <div>
         <b>ID (Optional)</b>
         <Input value={id} onChange={e => updateChoice(uuid, { ...choice, id: e.target.value })} />
