@@ -184,7 +184,7 @@ export const BuilderPage: FC = () => {
     <>
       <Button style={{ marginTop: 16, marginLeft: 16 }} type="link" onClick={() => navigate('/')}>&lt; Back</Button>
 
-      <Space direction="vertical" style={{ width: '100%', padding: 32 }}>
+      <Space direction="vertical" style={{ width: 'calc(100% - 64px)', padding: 32 }}>
         <Collapse>
           {groups.map(group => (
             <Collapse.Panel key={group.uuid}
