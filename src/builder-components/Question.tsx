@@ -7,13 +7,14 @@ import { Choice } from '.';
 interface Props {
   question: QuestionBuilder;
   updateQuestion: (uuid: string, question: QuestionBuilder) => void;
-  groupIds: string[];
-  questionIds: string[];
   choiceIds: string[];
 }
 
-export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questionIds, choiceIds }) => {
-  const { uuid, id, type, inputType, title, placeholder, defaultDisabled, choices, validators, maxLength, min, max } = question;
+export const Question: FC<Props> = ({ question, updateQuestion, choiceIds }) => {
+  const {
+    uuid, id, type, inputType, title, placeholder, defaultDisabled, enabledOnSelected, disabledOnSelected,
+    choices, validators, maxLength, min, max
+  } = question;
 
   const addChoice = () => {
     updateQuestion(uuid, {
@@ -21,8 +22,7 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
         uuid: shortUuid.generate(),
         defaultDisabled: false,
         value: '',
-        title: '',
-        onSelected: {}
+        title: ''
       }]
     });
   };
@@ -54,6 +54,24 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
         <Select style={{ width: '100%' }} value={defaultDisabled ? 1 : 0} onChange={value => updateQuestion(uuid, { ...question, defaultDisabled: !!value })}>
           <Select.Option value={0}>No</Select.Option>
           <Select.Option value={1}>Yes</Select.Option>
+        </Select>
+      </div>
+
+      <div>
+        <b>Enabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={enabledOnSelected} onChange={enabledOnSelected => updateQuestion(uuid, { ...question, enabledOnSelected })}>
+          {choiceIds.map(id =>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
+          )}
+        </Select>
+      </div>
+
+      <div>
+        <b>Disabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={disabledOnSelected} onChange={disabledOnSelected => updateQuestion(uuid, { ...question, disabledOnSelected })}>
+          {choiceIds.map(id =>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
+          )}
         </Select>
       </div>
 
@@ -155,8 +173,6 @@ export const Question: FC<Props> = ({ question, updateQuestion, groupIds, questi
                     key={choice.uuid}
                     choice={choice}
                     updateChoice={updateChoice}
-                    groupIds={groupIds}
-                    questionIds={questionIds}
                     choiceIds={choiceIds}
                   />
                 </Collapse.Panel>

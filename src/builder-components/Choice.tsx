@@ -5,13 +5,11 @@ import { ChoiceBuilder } from '../pages';
 interface Props {
   choice: ChoiceBuilder;
   updateChoice: (choiceId: string, choice: ChoiceBuilder) => void;
-  groupIds: string[];
-  questionIds: string[];
   choiceIds: string[];
 }
 
-export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds, choiceIds }) => {
-  const { uuid, id, value, title, defaultDisabled, onSelected } = choice;
+export const Choice: FC<Props> = ({ choice, updateChoice, choiceIds }) => {
+  const { uuid, id, value, title, defaultDisabled, enabledOnSelected, disabledOnSelected } = choice;
 
   return (
     <Space direction="vertical" style={{ width: '100%', rowGap: 16 }}>
@@ -39,31 +37,19 @@ export const Choice: FC<Props> = ({ choice, updateChoice, groupIds, questionIds,
       </div>
 
       <div>
-        <b>Enable When Selected (Optional)</b>
-        <Select style={{ width: '100%' }} mode="multiple" value={onSelected?.enable} onChange={value => updateChoice(uuid, { ...choice, onSelected: { ...onSelected, enable: value.length === 0 ? undefined : value } })}>
-          {groupIds.map(id =>
-            <Select.Option key={id} value={id}>Group - {id}</Select.Option>
-          )}
-          {questionIds.map(id =>
-            <Select.Option key={id} value={id}>Question - {id}</Select.Option>
-          )}
+        <b>Enabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={enabledOnSelected} onChange={enabledOnSelected => updateChoice(uuid, { ...choice, enabledOnSelected })}>
           {choiceIds.map(id =>
-            <Select.Option key={id} value={id}>Choice - {id}</Select.Option>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
           )}
         </Select>
       </div>
 
       <div>
-        <b>Disable When Selected (Optional)</b>
-        <Select style={{ width: '100%' }} mode="multiple" value={onSelected?.disable} onChange={value => updateChoice(uuid, { ...choice, onSelected: { ...onSelected, disable: value.length === 0 ? undefined : value } })}>
-          {groupIds.map(id =>
-            <Select.Option key={id} value={id}>Group - {id}</Select.Option>
-          )}
-          {questionIds.map(id =>
-            <Select.Option key={id} value={id}>Question - {id}</Select.Option>
-          )}
+        <b>Disabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={disabledOnSelected} onChange={disabledOnSelected => updateChoice(uuid, { ...choice, disabledOnSelected })}>
           {choiceIds.map(id =>
-            <Select.Option key={id} value={id}>Choice - {id}</Select.Option>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
           )}
         </Select>
       </div>

@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "homepage": ".",
-  "workspaces": [
-    "../form-studio"
-  ],
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx",
     "start": "react-scripts start"
   },
   "dependencies": {
     "antd": "5.8.6",
+    "form-studio": "^0.15.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.1",

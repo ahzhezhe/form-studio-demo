@@ -11,19 +11,20 @@ questions.push({
   },
   validators: ['notNullMultiple'],
   choices: [
-    { value: 'javascript', custom: { title: 'Javascript' }, onSelected: { enable: ['react'] } },
-    { value: 'java', custom: { title: 'Java' }, onSelected: { enable: ['spring'] } },
-    { value: 'python', custom: { title: 'Python' } },
-    { value: 'c++', custom: { title: 'C++' } },
-    { value: 'c#', custom: { title: 'C#' } },
-    { value: 'vbnet', custom: { title: 'VB.NET' } },
-    { value: 'others', custom: { title: 'Others' }, onSelected: { enable: ['programmingLanguagesOthers'] } }
+    { id: 'programmingLanguages_javascript', value: 'javascript', custom: { title: 'Javascript' } },
+    { id: 'programmingLanguages_java', value: 'java', custom: { title: 'Java' } },
+    { id: 'programmingLanguages_python', value: 'python', custom: { title: 'Python' } },
+    { id: 'programmingLanguages_c++', value: 'c++', custom: { title: 'C++' } },
+    { id: 'programmingLanguages_c#', value: 'c#', custom: { title: 'C#' } },
+    { id: 'programmingLanguages_vbnet', value: 'vbnet', custom: { title: 'VB.NET' } },
+    { id: 'programmingLanguages_others', value: 'others', custom: { title: 'Others' } }
   ]
 });
 
 questions.push({
   id: 'programmingLanguagesOthers',
   defaultDisabled: true,
+  enabledOnSelected: [['programmingLanguages_others']],
   type: 'any',
   custom: {
     inputType: 'string',
@@ -38,20 +39,22 @@ questions.push({
 questions.push({
   id: 'react',
   defaultDisabled: true,
+  enabledOnSelected: [['programmingLanguages_javascript']],
   type: 'choice',
   custom: {
     title: 'Have you used React in the past?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', custom: { title: 'Yes' }, onSelected: { enable: ['reactExperience'] } },
-    { value: 'false', custom: { title: 'No' } }
+    { id: 'react_true', value: 'true', custom: { title: 'Yes' } },
+    { id: 'react_false', value: 'false', custom: { title: 'No' } }
   ]
 });
 
 questions.push({
   id: 'reactExperience',
   defaultDisabled: true,
+  enabledOnSelected: [['react_true']],
   type: 'any',
   custom: {
     inputType: 'string',
@@ -64,20 +67,22 @@ questions.push({
 questions.push({
   id: 'spring',
   defaultDisabled: true,
+  enabledOnSelected: [['programmingLanguages_java']],
   type: 'choice',
   custom: {
     title: 'Have you used Spring in the past?'
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', custom: { title: 'Yes' }, onSelected: { enable: ['springExperience'] } },
-    { value: 'false', custom: { title: 'No' } }
+    { id: 'spring_true', value: 'true', custom: { title: 'Yes' } },
+    { id: 'spring_false', value: 'false', custom: { title: 'No' } }
   ]
 });
 
 questions.push({
   id: 'springExperience',
   defaultDisabled: true,
+  enabledOnSelected: [['spring_true']],
   type: 'any',
   custom: {
     inputType: 'string',
@@ -90,6 +95,7 @@ questions.push({
 export const group3: GroupConfigs = {
   id: 'grpSoftwareDevelopment',
   defaultDisabled: true,
+  enabledOnSelected: [['softwareDeveloper_true']],
   custom: { title: 'Software Development' },
   questions
 };

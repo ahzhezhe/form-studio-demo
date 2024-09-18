@@ -10,14 +10,15 @@ questions.push({
   },
   validators: ['notNullSingle'],
   choices: [
-    { value: 'true', custom: { title: 'Yes' }, onSelected: { enable: ['email'] } },
-    { value: 'false', custom: { title: 'No' } }
+    { id: 'subscribe_true', value: 'true', custom: { title: 'Yes' } },
+    { id: 'subscribe_false', value: 'false', custom: { title: 'No' } }
   ]
 });
 
 questions.push({
   id: 'email',
   defaultDisabled: true,
+  enabledOnSelected: [['subscribe_true']],
   type: 'any',
   custom: {
     inputType: 'string',

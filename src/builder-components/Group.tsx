@@ -7,13 +7,11 @@ import { Question } from '.';
 interface Props {
   group: GroupBuilder;
   updateGroup: (uuid: string, group: GroupBuilder) => void;
-  groupIds: string[];
-  questionIds: string[];
   choiceIds: string[];
 }
 
-export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, choiceIds }) => {
-  const { uuid, id, defaultDisabled, title, questions } = group;
+export const Group: FC<Props> = ({ group, updateGroup, choiceIds }) => {
+  const { uuid, id, defaultDisabled, enabledOnSelected, disabledOnSelected, title, questions } = group;
 
   const updateQuestion = (uuid: string, question: QuestionBuilder) => {
     const newQuestions = questions!.map(q => q.uuid !== uuid ? q : question);
@@ -59,6 +57,24 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
       </div>
 
       <div>
+        <b>Enabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={enabledOnSelected} onChange={enabledOnSelected => updateGroup(uuid, { ...group, enabledOnSelected })}>
+          {choiceIds.map(id =>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
+          )}
+        </Select>
+      </div>
+
+      <div>
+        <b>Disabled When Choices Are Selected (Optional)</b>
+        <Select style={{ width: '100%' }} mode="multiple" value={disabledOnSelected} onChange={disabledOnSelected => updateGroup(uuid, { ...group, disabledOnSelected })}>
+          {choiceIds.map(id =>
+            <Select.Option key={id} value={id}>{id}</Select.Option>
+          )}
+        </Select>
+      </div>
+
+      <div>
         <b>Questions</b>
         <Collapse>
           {questions.map(question => (
@@ -76,8 +92,6 @@ export const Group: FC<Props> = ({ group, updateGroup, groupIds, questionIds, ch
                 key={question.uuid}
                 question={question}
                 updateQuestion={updateQuestion}
-                groupIds={groupIds}
-                questionIds={questionIds}
                 choiceIds={choiceIds}
               />
             </Collapse.Panel>

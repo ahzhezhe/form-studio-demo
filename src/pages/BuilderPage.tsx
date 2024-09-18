@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, Space } from 'antd';
-import { Form, ChoiceConfigs, ChoiceOnSelected, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
+import { Form, ChoiceConfigs, Configs, GroupConfigs, QuestionConfigs, QuestionType } from 'form-studio';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import shortUuid from 'short-uuid';
@@ -10,6 +10,8 @@ export interface GroupBuilder {
   uuid: string;
   id?: string;
   defaultDisabled: boolean;
+  enabledOnSelected?: string[];
+  disabledOnSelected?: string[];
   title: string;
   questions: QuestionBuilder[];
 }
@@ -18,6 +20,8 @@ export interface QuestionBuilder {
   uuid: string;
   id?: string;
   defaultDisabled: boolean;
+  enabledOnSelected?: string[];
+  disabledOnSelected?: string[];
   type: QuestionType;
   inputType?: string;
   title: string;
@@ -33,17 +37,16 @@ export interface ChoiceBuilder {
   uuid: string;
   id?: string;
   defaultDisabled: boolean;
+  enabledOnSelected?: string[];
+  disabledOnSelected?: string[];
   value: string;
   title: string;
-  onSelected: ChoiceOnSelected;
 }
 
 export const BuilderPage: FC = () => {
   const navigate = useNavigate();
   const [configs, setConfigs] = useState<Configs>();
   const [groups, setGroups] = useState<GroupBuilder[]>([]);
-  const [groupIds, setGroupIds] = useState<string[]>([]);
-  const [questionIds, setQuestionIds] = useState<string[]>([]);
   const [choiceIds, setChoiceIds] = useState<string[]>([]);
   const [showConfigs, setShowConfigs] = useState(false);
 
@@ -54,11 +57,15 @@ export const BuilderPage: FC = () => {
       uuid: shortUuid.generate(),
       id: group.id,
       defaultDisabled: !!group.defaultDisabled,
+      enabledOnSelected: group.enabledOnSelected?.[0] as string[],
+      disabledOnSelected: group.disabledOnSelected?.[0] as string[],
       title: group.custom?.title,
       questions: (group.questions || []).map((question): QuestionBuilder => ({
         uuid: shortUuid.generate(),
         id: question.id,
         defaultDisabled: !!question.defaultDisabled,
+        enabledOnSelected: question.enabledOnSelected?.[0] as string[],
+        disabledOnSelected: question.disabledOnSelected?.[0] as string[],
         type: question.type,
         inputType: question.custom?.inputType,
         title: question.custom?.title,
@@ -71,9 +78,10 @@ export const BuilderPage: FC = () => {
           uuid: shortUuid.generate(),
           id: choice.id,
           defaultDisabled: !!choice.defaultDisabled,
+          enabledOnSelected: choice.enabledOnSelected?.[0] as string[],
+          disabledOnSelected: choice.disabledOnSelected?.[0] as string[],
           value: choice.value,
-          title: choice.custom?.title,
-          onSelected: choice.onSelected || {}
+          title: choice.custom?.title
         }))
       }))
     }));
@@ -104,8 +112,6 @@ export const BuilderPage: FC = () => {
       });
     });
 
-    setGroupIds(groupIds);
-    setQuestionIds(questionIds);
     setChoiceIds(choiceIds);
 
     const configs: Configs = {
@@ -127,6 +133,8 @@ export const BuilderPage: FC = () => {
             min: question.min,
             max: question.max
           },
+          disabledOnSelected: question.disabledOnSelected ? [question.disabledOnSelected] : undefined,
+          enabledOnSelected: question.enabledOnSelected ? [question.enabledOnSelected] : undefined,
           validators: question.validators,
           choices: question.choices.map((choice): ChoiceConfigs => ({
             id: choice.id,
@@ -134,8 +142,7 @@ export const BuilderPage: FC = () => {
             value: choice.value,
             custom: {
               title: choice.title
-            },
-            onSelected: choice.onSelected
+            }
           }))
         }))
       }))
@@ -200,8 +207,6 @@ export const BuilderPage: FC = () => {
               <Group
                 group={group}
                 updateGroup={updateGroup}
-                groupIds={groupIds}
-                questionIds={questionIds}
                 choiceIds={choiceIds}
               />
             </Collapse.Panel>
